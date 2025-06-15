@@ -1,0 +1,577 @@
+cambio file urdf altered per avere tutto robot fermo fixed e il manipolatore revolute e creo usd file e merged
+
+creo file urdf per wheel staccata da xacro e poi usd tutta fixed e merged
+
+
+cambio moonbot.cfg per avere gli attuatori sul giunto giusto con valori giusti:
+effort_limit_sim = mass * 9.81 * lunghezza_link
+velocity_limit_sim = 0.5 – 1.0 se vuoi evitare salti
+stiffness = 1e6 (molto rigido)
+damping = 300 (alto smorzamento per evitare oscillazioni(
+
+
+cambio cabinet env cfg per creare la dragongraspscenecfg:
+handle_frame serve per creare frame su handle per fare osservazioni di collisioni ecc per il reward
+
+cambio anche reward action observation e termination: reward semplice solo approach handle, event senza domain randomiz per ora, observation completa, termination invariata. action li metto in un file a partein mdp
+
+cambio il file urdf per rendere gripper prismatico e i giunti rotazionali con i giusti limiti di forza e di range di rotazione. 
+
+aggiungo il terreno all environment
+
+22 aprile
+
+sto cecando di runnura l  env da solo con train.py. HYDRA_FULL_ERROR=1  nel comando all inziio per fare debug
+
+
+uso il usd dragon di elian dato su email da astosh
+
+tolgo terreno di azal usd per questo errore: Omniverse non riesce a trovare la texture per un materiale del terreno (/World/Terrain/Looks/Material_0/baseColorTex). In particolare, cerca un file .jpg in una cartella temporanea (/tmp/...), che non esiste più.
+
+sono riuscito a runnare il ambiente
+
+
+23 aprile
+
+
+sto sistemando l env per non far volare o sovrapporre i robot: risolto con         self.replicate_physics = True e i setting della simulation e altezza dragon iniziale e distanza env
+
+sto mettendo posizione iniziale dei giunti: a forma di braccio alzato in moonbot cfg
+
+inizio le observations
+finite observations
+
+azioni vanno bene
+
+24 Aprile
+
+Cambio velocita max damping effort per smoothness, metto valori reali. va molto lento ma molto meglio in moonbotcfg
+
+metto attuatori gripper realistici in moonbot cfg
+
+inizio i reward
+
+faccio nuovi usd file dragon con giunti fissi (2)
+
+metto scale=5 per far andare i giunti piu veloci nel training senno ci mettono troppo poi andra tolto nel fine tuning in inference della policy per sim2real
+
+sistemato init pos e actuator gripper1
+
+
+25 aprile
+
+messo alcuni reward incrementali
+
+cambio terreno celle piu piccole
+
+metto limiiti gripper range self.actions.gripper_action.joint_pos_limits
+
+
+28 Aprile
+
+creo file rsl rl equivalente a skrl
+
+provo a vedere i logs runnando un train pesante. guardo i grafici delle reward e di entropia
+
+allontanare ruota
+
+penalita per giunto troppo vicino al suolo
+
+inizio a mettere il grasp_successful per tenere fermo il grip1 quando e falso: cambio il reset scene to default classe di eventcfg e aggiungo grasp completed
+
+HeroDragonGraspEnv creo questo ambiente e lo uso nel gym per bloccae i gripper
+
+sistemo tutto quello che riguarda grasp completed, ma non funziona
+
+faccio hero dragon grip, versione stupida
+
+
+30 Aprile
+
+controllo gripper
+
+non funziona pre physicù
+
+sistemato joint4 frame
+
+inizio a creare policy per gripper1 e settare tutto in MADRL 3 policies commentata perche prima voglio fare training pesante
+
+faccio training di 40 min
+
+aumento peso di aprroach x perche peggiora nel tempo e joint vel per stesso motivo
+
+guardo i reward di reach al posto di cabinet (non mi servono perche si usano per comandi precisi, io voglio che il robot impari da solo le pose quindi no commandmanager)
+
+inizio curriculum learning sul momento di attivazione dei reward al posto di farli sequenziali, senno si attivano anche a random (sparse reward) e curriculum sui threshold che comunque rimangono come condizione di attivazione dei reward e li mantengo larghi quando si attiva il curriculum e si stringono dopo un po e curriculum sul peso di penalize low joint e su grasp handle
+
+
+7 Maggio
+
+
+preparo presentazione
+aggiungo recorder in cabinet
+studio come fare video pplay polkicy
+
+aggiungo curriculum su scale per gli actuator (non funziona)
+in pratica reset idx non viene chiamato nel mio env reale ma solo quello di managerbasedrl, quindi cambio direttamente quello
+cambio anche il suo step per vedere come cambiano i threshold: creo log_curriculum_thresholds e cambio step
+
+termination per braccio e ee a terra
+
+
+8 Maggio
+
+Cambio dimensione rete neurale in agent perche troppo grande 256, 128, 64. metto solo 128, 64
+
+cambio num step per env e num mini batches per aggiornare policy bene https://chatgpt.com/share/681c1a2b-0724-8000-bb77-86608546a355
+
+
+Domanda
+
+devo usare due attuatori per il gripper? ho si due giunti left e right ma il motore reale quanti sono? in teoria i giunti sono simmetirci quindi basta uno , ma questo vale slo nella realta o anceh in simulazione che sono simmetrici? 
+Risposta Elian: ce solo un motore il giunto bis e finto e non serve nella realta perche mimic ma nella simulazione devo vedere se serve e se effettivamente copia i movimenti dellaltro giunto controllato
+
+metto commentato actuator di gripperbis (da controllare avanti) anche in actions
+grip1 e sotto grip1bis e sopra
+
+
+9 MAggio
+
+Total timesteps/(num_envs×Mean episode length) e num episodi per env (3000 iteraz. 10 ore e 1000 ep)
+
+​
+cambio entropy coeff da 1e-3 a 1e-2 da agent  (SE SERVE POSSO CAMBIARE ANCHE INIT NOISE STD)
+ 
+messo attivazione dei reward globale e sincronizzata tra gli env e anceh per i threshold, semplicemetnte mettendo min nel conteggio degli episodi per prendere l env piu indietrro
+
+
+faccio reward per gripper 1 per rimanere chiuso solo per parte destra quindi giunto grip1 con curriculum su thrshold e peso
+
+cambio reward di grasp era tutto sbaglaito , era su posizione del frame del dito e non sul joint
+
+
+provo a fare file usd in cui braccio si stacca da ruota. ho fatto usd di braccio e uso usd di ruota di marcus
+
+
+faccio training 10h con entropy alta 5e-2, disastro, end of threshold a 2000, 2400, 2600
+
+
+
+10 Maggio
+
+
+faccio training con entropy piu bassa 5e-3, e allungo end range dei threshold a 5000, 5400, 5600
+
+cambio termination low joint a 5 cm
+
+
+12 Maggio
+
+finito presentazione
+
+facio terminazition low joints per tutti i link (aggiungendo i frame) adesso ho joint4,6 e ee
+
+fatto termination se ruote vanno sopra i 30 cm
+
+controllo il grasping anche di gripper1 facendo reward che partono subito
+
+aggiungo observation per gripper1, senno policy non sa stato del gripper
+
+sistemo le observations che erano tutte sbagliate la policy non vedeva niente
+
+rifaccio file usd e metto i ivecchi in orig. nelnovo ho i giunti mimic
+
+impazzito a capire il gripper otto di sera poooo
+
+13 Maggio (presentazione)
+
+metto zy che parte subito con align
+
+creo align separato per asse z e x
+
+creo cono di threshold su reward x approach, cioe threshld piu largo quando distanza x piu grande
+
+rendo anche weght curriculum globale
+
+
+
+faccio is grasp succc in event per ora considera solo ee e handle
+faccio nel mio env pre physics
+grassp nanager in cabinet
+
+14 Maggio
+
+
+metto reward zy indipendente da align TRAIN 13May2 MOLTO BUONO MA aprroach zy diminuisce
+
+metto punizione per ee troppo basso dentro penalize low joints
+
+curriculum zy prima per vicinanza generale poi solo approccio da sopra
+faccio training 16:29
+
+reward per joint4 alto e entropia alto e faccio bonus per inutilizzo joint 3 e 5a
+
+provo training veloce cosi e con align separati
+
+IDEA METTERE TEMPORALMENTE PRIMA JOINT4 ALTO e DOPO ZY APPROACH
+
+metto align x alla quarta per stringere i valori piu selettivo
+
+cambio stiff damping adesso riesce ad alzare braccio
+
+training con prima braccio alzato
+
+
+15 Maggio
+
+training 14may MOLTO BELLO mostra fare curriculum weight su high joint e sistemare align x
+
+creo termination e penalty per ruote mosse lungo y
+
+messo limite superiore a reward joint4 height cosi non cerca di farlo andare troppo in alto
+
+creo penalita giunto7 se sta fuori range -180+180
+
+cambio urdf grip con giunto7 revolute
+
+weight curriculum su reward joint4
+
+16 Maggio
+
+training 15may2 PERFETTO a parte collisioni con ruota
+
+
+19 Maggio
+
+reward e termination per contatto tra oggetti creando sesnore contattpo SERVE ANCHE SE NON MONTATO SU ROBOT REALE SE USATO SOLO IN REWARD MA SE USATO IN OBSERVATION SERVE ANCHE SU ROVBOT REALE. DISCUSSIOONE TESI
+
+faccio collision con le ruote invece che non centro della wheel
+
+penalty per ee oltre handle lungo x
+
+
+metto termination grasp completed
+
+tolgo penalize wheel. restringo la terminatioin, metto actuator mimic come quello normale dl grip1 
+
+modifico apply action di actiomanager per forzare il mimic
+
+faccio grasp reward su distanza finger
+
+
+20 Maggio
+
+faccio file madrl
+
+facciopartire training 
+
+passato giornata a cercare di sistema joint7 che gira semore, non riusxito
+
+24 Maggio
+
+training del 23 maggio non buono. HO AGGIUNTO OBSEREVARION LAST ACTION
+
+provo a rifarlo senza la parte sulle collision che secondo me è il problema dato che joint7 ruota sempre impossibile che non collida
+
+
+25 Maggio
+
+Eureka. giunto 7 si muove anche nel altro verso aumentando la velocita del actuator
+
+auemtno velocita anche dei giunti piccoli
+
+26 Maggio
+
+gradienti impazziscono. succede questo Se self.log_std diventa troppo negativo (es. < -40), allora torch.exp(self.log_std) diventa 0, e per instabilità numerica può risultare in valori negativi o NaN → errore su Normal(mean, std). https://chatgpt.com/share/6833c2ba-fa80-8000-a492-a16d335e096e
+
+inizio a risolvere abbassando effort limit che era *10000. riabbasso velocita giunti piccolo che era a *10 e di giunto 7 da *50 a *20 
+
+e lascio solo scale2 a 100 non 10000 e 3000
+
+
+modifico in miniconda3 actor critic.py per clampare i std log
+
+trining dell 15:02 normale, ma troppa entropia che lavevo alzata a 2e-2
+
+provo a mettere reward joint4 alto con weight fisso 0.5
+
+voglio provare training senza progressione di attivazione dei reward, attivi tutti assieme fatto alle 17:58 ma approach x ancora dopo
+
+con tutto insieme fatto alle 19:57 e approach x peso 2
+
+27 Maggio
+
+cambio reward joint4 mettendo anche allineato con y di handle
+rimetto approach x che parte dopo.
+
+train 17:58 buono ma joint 4 non si allunga verso handle. action sono buone. aumento la sua velocita max da 5x a 10x e faccio train 
+
+
+provo a riunire in unico reward l align 16:01
+
+provo a mettere align temporalmente con approach x 16:48
+
+aggiunto penalty giunto 1 e 3 e commento penalty x
+
+28 Maggio 
+
+training mattina senza termination collision, tutto il curriculum vecchio e weight su touch
+
+cambio che reward zy c'e allinizio solo stando lontano dall handle e altezza j4 allinizio non ce reward per x
+
+riabbasso dimensione rete neurale e train 11:42. MOLTO MENO NOISE e vibrazioni dei reward DEL 9:12 DISCUTERE. MORTO PER STD<0. RIMODIFICO ACTOR CRITIC NELLA PARTE SCALAR
+
+aumento velocita aggiornamento policy abbassando step per env e batch, impara molto piu velocemente NAN PORCODIO
+
+metto noise std type log in actor critic
+
+NON HA FUNZIONATO COMUNQUE
+
+clippo loss value function che era a 3e33 al crash. lo clipppo a 100 nel file ppo in miniconda
+(11 di sera)
+
+clippo anche action rate in reward generale
+
+29 Maggio
+
+Train perfetto ma ee muove l handle.
+
+provo a mettere wheelfisso in moonboot cfg e train
+
+cambio ppo per debugging
+
+Notte 29 Maggio 20:33 train perfetto, ma manca approccio 
+
+30 Maggio
+
+rendo piu concessivo l approccio graduale
+
+train 12:46
+
+😛️aggiungo a on policy runner in miniconda churriculum su step per env da 64 a 128 dopo 2000 iterazioni train 15:44 !!!!!!!!!!
+
+start_iter = self.current_learning_iteration
+        tot_iter = start_iter + num_learning_iterations
+        for it in range(start_iter, tot_iter):
+            # Dynamically change num_steps_per_env at a given iteration
+            if it == 2000:
+                old_steps = self.num_steps_per_env
+                new_steps = 128
+                print(f"📈 Switching num_steps_per_env from {old_steps} → {new_steps}")
+                print(f"🔎 self.env.num_privileged_obs = {self.env.num_privileged_obs}")
+                self.num_steps_per_env = new_steps
+                self.cfg["num_steps_per_env"] = new_steps
+
+                self.alg.init_storage(
+                    training_type=self.training_type,
+                    num_envs=self.env.num_envs,
+                    num_transitions_per_env=self.num_steps_per_env,
+                    actor_obs_shape=[self.env.num_obs],
+                    critic_obs_shape=[self.env.num_obs],  # <- stesso shape se no privileged
+                    actions_shape=[self.env.num_actions],
+                )
+
+
+31 Maggio 
+
+train 30 maggio tutti male per nan
+
+abbasso entropy, cambio max grad norm in algorithm di rsl e abbasso reward pesi. 13:07
+
+13:56 entropy 1, pesi grasp a 2 e partiti con approach x a 100 ep e da 64 a 128 (approach x peso 0.5?)
+
+19:33 invece entropi 2 e approach x a 50 ep fisso 64
+
+1 Giugno
+
+13:56 PERFETTO ma manca qualche centrimento di approach. Cambio: penalita se handle si muove a -10, rimetto da 64 a 128, approach x peso 2 e bonus approach a 1 e entropi a 2
+
+2 Giugno
+
+
+15:01 di ieri perfetto
+
+provo a aggiungere gripper1. abbasso episodi a 5 sec, cerco giusti actuator
+
+metto terreeno lunare cambaindo confugure env origins di terrain importer per non avere sovrapposizioni di env in sub terrains
+
+3 GIUGNO
+
+aggiungo evento per resettare env in posizioni diverse rispetto alla maniglia 
+
+cambio penalaize wheel in modo che non penbalizzi in base a orientamento rispetto a origine, ma rispetto a come spwna il robot, salvando la posizione a 250 step
+
+ho messo fallback su actor critic per non bloccare il training quando std<0 e lo reimposta a 1
+
+train 14:59 merdina perche troppe diverse posizioni iniziali, le riduco di range
+
+aggiungo noise su joint pos e vel obs 
+
+train 18:53
+
+
+
+
+
+
+
+
+
+
+
+
+CAMBIO POSIZIONE INIIZIALE MANIPOLATORE PERCHE ME LHA DETTO SHAMI
+
+creo penalty e termination per collision tra due link in questa nuova posizione iniziale
+
+
+7 Giugno 
+
+train 2025-06-06_14-49-33 con nuova pos iniziale buono, ma si blocca lontano dall handle.
+
+rifaccio train 21:00 con usd senza camera porcaccioildio
+
+tolgo da reward highjoint il reward sulla z, ora solo x e y.
+
+
+9 Giugno
+
+
+
+2025-06-09_11-52-55 è train pos iniz nuova usd nuovo
+
+2025-06-09_12-38-53 train pos iniziale vecchia con usd nuovo
+
+(da fare) è train pos iniziale nuova con usd vecchio perche usd nuovo si blocca, (vedi train 2025-06-09_11-52-55)
+
+10 giugno
+
+16:04 runno train uguale a quello buono del 1 giugno 15:01. ci mette una vita
+
+11 giugno
+
+altro train per imparare piu in fretta, modifiche al agent, morto per std in fretta
+
+idea, ripeto quello del 1 giugno con anche il terrain plane train 17:58
+
+12 giugno 
+
+riprovo ma con anche robot usd bianco (PY)
+
+AVEVO SBAGLIATO TUTTO PERCHE APPROACH ZY VALEVA SOLO QUNADO ERA LONTANO DAL HANDLE. cambiato
+
+
+2025-06-12_09-37-14 buono, ma reward grasp troppo tardi (curriculum tesi( ma a parte questo molto buono perche ha recuperato
+
+cambio per farli partire con approach x 17:05
+
+
+
+2025-06-12_19-00-34 train con pos inziale nuova e noise su observation e su pos iniziale robot, morto subito
+
+2025-06-12_19-44-16 solo noise su pos iniziale, buono ma si ferma ancora un po lontano dal target. 
+
+13 Giugno
+
+2025-06-13_14-20-13 cambio reward grasp per non dare penalita se xy non perfetto, ma solo reward se lo è. rimane noise su init pos + aumento termination completed a 4 cm perche l handle ha quel muretto di merda
+
+
+
+2025-06-13_14-56-55 num step per env 196
+
+ho impostato i reward 
+
+tolgo termination wheel
+
+
+2025-06-13_17-33-56 vedo che approach zy si abbassa rispetto a x, ma magari si riprende
+
+
+2025-06-13_18-43-06 pesi degli approach uguali
+
+2025-06-13_17-33-56
+
+2025-06-13_18-43-06
+
+2025-06-13_20-34-19 metto schedule constant invece di adaptive!!!!!
+ 
+
+2025-06-14_12-44-10 è perfetto, ma no termination grasping quindi sara ancora un po distante colpa reward grasp
+
+2025-06-14_12-51-32 uguale
+
+2025-06-14_15-40-24 uguale
+
+
+15 Giugno
+
+
+2025-06-15_11-52-38 provo senza reward grasp
+
+
+2025-06-15_14-53-24 provo senza il cono su approach x
+
+
+DA FARE
+
+
+FARE REWARD APPROACH Y JOINT4
+
+voglio provare training senza progressione di attivazione dei reward, attivi tutti assieme e magari in secondo training con alta entropia
+
+
+
+stampare episodio piu piccolo
+
+noise su distanza della wheel dal robot
+
+
+
+
+graspmanager e grasp completed e grasp successful
+
+penalita wheel alta NO, BASTA TERMINAZIONE
+
+termination su gripper1 aperto
+
+sistemare bonus no joint
+
+fare reward di zy che penalizza sotto sotto altezza dell handle
+
+fare nuovo moonbot
+
+
+problema: gripper apero in simulazione non fa cadere il braccio, rimane incollato
+
+
+curriculum su action rate e joint vel (non sono in reward pero)
+
+
+curriculum su velociuta giunti e actuators (curriculum dinamico sul scale generale)
+
+curriculum sulla velocita massima dei giunti, prima veloci poi lenti (molto complicato)
+
+
+Introdurre un sistema per abbassare il peso di reward vecchi man mano che ne attivi di nuovi (non solo aggiungere). NON HA SENSO PERCHE I REWARD VECCHI SERVONO FINO ALLA FINE, SEQUENZIALI E NECESSARI
+
+
+
+mettere termination dovuta a fallimento di gripper1 di stare chiuso
+
+manca per il gripper la soluzione nel usd e non so il range ancora target position -0.025 
+
+vedere se gripper funziona senza controllare il bis e fa bene mimic
+
+fare il curriculum per terreni piu difficili
+reward piu difficili e curriculum implicito cioe reward su gripper con condizione di contatto con handle e 
+
+
+mettere punizione grave per aprire il gripper 1 prima che sia chiuso laltro
+
+mettere gravità lunare
+
+
+creare nuova policy per releasing https://chatgpt.com/share/680b791f-5b9c-8000-84f0-db00700b4f50
+
+
+

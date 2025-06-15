@@ -1,0 +1,13 @@
+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
+
+
+edomrl@moonshot6:~/moonbot_tools$ bash operator.bash 
+
+
+edomrl@moonshot6:~/moonbot_tools/scripts$ bash rviz_simu.bash 
+
+
+edomrl@moonshot6:~/moonbot_tools/scripts$ bash start_stack.bash 
+
+
+

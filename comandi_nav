@@ -1,0 +1,5 @@
+HYDRA_FULL_ERROR=1 ./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/train.py --task Locomotion-HeroDragon-Play-v0
+
+python -m tensorboard.main --logdir logs/rsl_rl/hero_dragon_nav
+
+creo classe shared actions in joint actions di mdp globale.

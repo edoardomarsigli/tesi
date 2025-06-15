@@ -1,0 +1,46 @@
+conda create -n env_isaaclab1 python=3.10
+
+
+conda activate env_isaaclab1
+
+HYDRA_FULL_ERROR=1 ./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/train.py --task Manipulation-HeroDragon-Play-v0
+
+
+HYDRA_FULL_ERROR=1 ./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task Manipulation-HeroDragon-Play-v0
+
+
+HYDRA_FULL_ERROR=1 ./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/train.py --task Manipulation-HeroDragon-v0 --headless
+
+python -m tensorboard.main --logdir logs/rsl_rl/hero_dragon_grasp
+
+
+HYDRA_FULL_ERROR=1 ./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task Manipulation-HeroDragon-v0 --headless
+
+python -m tensorboard.main --logdir logs/skrl/hero_dragon_grasp
+
+python scripts/reinforcement_learning/rsl_rl/play.py --task=Manipulation-HeroDragon-Play-v0 --load_run=YYYY-MM-DD_HH-MM-SS
+
+python scripts/reinforcement_learning/skrl/play.py --task=Manipulation-HeroDragon-Play-v0 --load_run=YYYY-MM-DD_HH-MM-SS
+
+
+
+https://isaac-sim.github.io/IsaacLab/main/source/overview/environments.html
+https://docs.isaacsim.omniverse.nvidia.com/latest/isaac_lab_tutorials/tutorial_policy_deployment.html
+https://docs.isaacsim.omniverse.nvidia.com/latest/robot_simulation/articulation_controller.html
+
+git add .
+git commit -m "Tuo messaggio"
+git push
+
+
+python scripts/reinforcement_learning/rsl_rl/play.py --task=Manipulation-HeroDragon-Play-v0 --load_run=YYYY-MM-DD_HH-MM-SS --headless --video --video_length=12000
+
+Per unire i video: terminale dentro folder e  fare file input.txt con dentro liost6a DEI video file tipo 'rl-video-step-1200.mp4'
+poi  
+ffmpeg -f concat -safe 0 -i input.txt -c copy output_combined.mp4
+
+python scripts/tools/convert_urdf.py     /home/edomrl/hero_ros2/urdf/hero_dragon_grip.urdf     /home/edomrl/hero_ros2/urdf/hero_dragon_grip.usd     --merge-joints     --joint-stiffness 300     --joint-damping 5     --joint-target-type position
+
+ros2 run xacro xacro hero_wheel.xacro -o hero_wheel.urdf
+
+

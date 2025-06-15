@@ -1,0 +1,52 @@
+3 Giugno
+
+setup env e tutti gli mdp in velocity 
+
+faccio curriculum del command in manager based rl
+
+cambio reward upright_wheel_bodies_angle mettendo i frame di centro ruota e out  per non faar toccare a terra la ruota centro
+
+clampo gli std in actor critic
+
+faccio tutti i file usd con colori e camera
+
+6 Giugno
+
+aggiungo reward su dragon
+
+aggiungo termination
+
+non esiste file usd colorato con posizione arm giusta tipo approaccio da tenere fissa per la navigazione
+
+creo file finale giusto per la nav
+
+il robot si impenna dietro anche senza azioni, troppo pesante braccio o troppo leggere ruote. quale cambio?
+
+metto ruote a 156.9 kg al psoto di 15.69, non impenna piu
+
+cambio le inerzie come le aveva marcus
+
+non funziona lo stesso, ma gli usd di marcus non cadono, quindi ipotizzo sia colpa della telecamera e cambio usd di hazal colorato ma senza telecamera
+
+era quello il problema
+
+termination per angolo
+
+termination low joint
+
+cambio reward velocita per non usre std 
+
+metto peso ruota dietro maggiore, in modo che stessa torque davanti e dietro abbia tracking della velcoita sincronizzato
+
+
+
+
+
+Da Fare
+
+termination joint4 basso
+
+ma nella realta il robot come identifica la posizione della handle per approcciarla? soprattutto se la camera vede solo dritto e il robot è per esempio spostato
+
+
+

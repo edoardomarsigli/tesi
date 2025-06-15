@@ -1,0 +1,160 @@
+analisi a partire da trianing 2025-06-01_15-01-47
+
+https://chatgpt.com/share/68492eac-21d4-8000-a6d8-dcc0a0796a4a
+
+
+PPO
+
+
+Learning rate (actor e critic)
+
+Perché importante: definisce la velocità di aggiornamento dei pesi. Un valore troppo alto può causare instabilità o divergenza, troppo basso rallenta l’apprendimento.
+
+Range tipico: da 1e-4 a 5e-4 o 1e-3
+
+
+Clip parameter (ε o clip_param)
+
+Perché importante: definisce la soglia di clipping sul ratio di probabilità, limitando l’entità degli aggiornamenti di policy per mantenere stabilità.
+
+Range tipico: 0.1 – 0.3; 
+
+Come testare: provare almeno 0.1, 0.2, 0.3 e osservare andamento di KL e stabilità (spike di reward) durante training 
+joel-baptista.github.io
+
+
+Entropy coefficient (entropy_coef)
+
+Perché importante: bilancia esplorazione/exploit. Se troppo basso, l’agente potrebbe convergere prematuramente in una policy subottimale; se troppo alto, rimane troppo esplorativo.
+
+Range tipico: valori piccoli come 1e-3, 5e-4 o 1e-2 a seconda del task. In manipolazione, un’entropia moderata aiuta a evitare politiche determinate troppo presto, ma non serve un’esplorazione eccessiva dopo una fase iniziale.
+
+Analisi: testare decrescendo man mano che il training progredisce (es. schedule o annealing), oppure tenere fisso e confrontare più run con entropy_coef tra 1e-3 e 1e-2 
+joel-baptista.github.io
+
+
+Numero di step per ambiente (num_steps_per_env, “horizon” interno)
+
+Perché importante: definisce la lunghezza della traiettoria accumulata prima di un aggiornamento.
+
+Range tipico: per compiti di manipolazione può variare da 64 (come nel tuo config) fino a 2048 o 4096, a seconda del compromesso sample-efficiency vs. stima del gradiente. Step più lunghi raccolgono più informazione per update, ma aumentano correlazione temporale e possono richiedere più memoria.
+
+Consiglio: fare analisi su 64 vs. 128 vs. 256 vs. 512; con batch di ambienti paralleli, l’effetto reale è sul numero totale di transizioni per update. Monitorare varianza dei gradienti e stabilità.
+
+
+
+Value loss coefficient (value_loss_coef)
+
+Perché importante: pesa il contributo della loss del critic nella loss totale. Valori più alti danno priorità a critic, favorendo stime di valore stabili; valori più bassi favoriscono policy updates più aggressivi.
+
+Range tipico: 0.5 – 2.0. Se vedi che il value loss domina o diverge, regolare di conseguenza.
+
+Analisi: testare 0.5, 1.0, 2.0, osservare curva del value loss e come influisce sul reward.
+
+
+Init noise std (exploration iniziale per continuous action)
+
+Perché importante: definisce la varianza iniziale della policy gaussian. Se troppo bassa, esplorazione scarsa; troppo alta, politiche iniziali troppo rumorose.
+
+Range tipico: tra 0.1 e 1.0 a seconda della scala delle azioni.
+
+Analisi: testare init_noise_std tra 0.1 e 1.0, osservare velocità di scoperta di azioni utili e stabilità iniziale.
+
+Schedule di learning rate o clip/adaptive KL
+
+Perché importante: in PPO “adaptive” schedule di learning rate o uso di desired_kl aiuta a regolare automaticamente aggiornamenti. Se usi “adaptive” (come nel tuo config), controlla target_kl e verifica che il learning rate venga adattato come atteso senza stacchi troppo bruschi.
+
+Analisi: monitorare il KL effettivo vs. desired_kl; provare a cambiare desired_kl (es. 0.005, 0.01, 0.02) per vedere effetto su stabilità e velocità di convergenza.
+
+
+
+A2C
+
+https://chatgpt.com/share/684e4fb0-ffb4-8000-a5bd-76268ef68f03
+
+
+learning_rate
+
+Ruolo: passo dell’ottimizzatore sugli aggiornamenti della policy e del value.
+
+Range da esplorare: tipicamente in scala logaritmica, ad es. da 1e-5 a 1e-3.
+
+Cosa monitorare: curve di reward nel tempo, stabilità (es. oscillazioni o divergenza). Se vedi instabilità o divergenza rapida, abbassa; se convergenza troppo lenta, aumenta gradualmente.
+
+discount_factor (gamma)
+
+Ruolo: peso delle ricompense future; influenza l’orizzonte di ottimizzazione.
+
+Range da esplorare: ad es. tra 0.90 e 0.999, in base a quanto l’ambiente richieda pianificazione a lungo termine.
+
+Cosa monitorare: velocità di apprendimento e performance finale. Gamma troppo basso può far ignorare ricompense lontane; troppo alto può rallentare o rendere instabile se la stima del valore diventa rumorosa.
+
+lambda (GAE)
+
+Ruolo: bilancia bias vs. varianza nella stima dell’advantage tramite Generalized Advantage Estimation.
+
+Range da esplorare: ad es. da 0.90 a 0.99.
+
+Cosa monitorare: varianza del gradiente e stabilità del training. Con lambda vicino a 1 riduci bias ma aumenti varianza; con lambda basso riduci varianza ma introduci bias nell’advantage.
+
+entropy_loss_scale (coefficiente di entropia)
+
+Ruolo: regola forza della penalità/bonus di entropia nella loss per incoraggiare esplorazione.
+
+Range da esplorare: da 0 (niente entropia) fino a ~0.01.
+
+Cosa monitorare: entropia media della policy, velocità di miglioramento reward. Se entropia scende troppo in fretta e il training si blocca in soluzioni subottimali, aumenta; se rimane eccessiva e non convergi, diminuisci.
+
+rollouts (n_steps per aggiornamento)
+
+Ruolo: quanti passi di ambiente raccogli prima di ogni aggiornamento.
+
+Range da esplorare: tipicamente tra 32 e 256 passi (dipende memoria e stabilità).
+
+Cosa monitorare: trade-off fra varianza della stima del gradiente (batch più grande riduce varianza) e frequenza di aggiornamento (batch troppo grande rallenta reattività agli errori). Controlla stabilità della curva reward e uso di risorse.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

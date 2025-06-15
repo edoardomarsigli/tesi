@@ -1,0 +1,35 @@
+analisi su problemi sim2real
+
+prof mi ha detto di runnare policy su rviz cambiando parametri fisici actuators
+e di fare ipotesiu sui problemi riscontrati
+e in base a quello vedere se cambiando modello migliora oppure fare train direttamente sul robot, oppure vedere se modello di noise usato va bene per la noise reale che mi arriva dalla camera
+
+
+
+
+ROBUSTNESS
+
+
+
+UNIFORM NOISE VS GAUSSiAN NOISE
+
+Per i joint_pos_rel (posizione relativa del giunto): se il giunto reale ha risoluzione di, ad esempio, 0.1° (≈0.0017 rad) o errore di ±0.5° (≈±0.0087 rad), potresti impostare std=0.005 rad per Gaussian o n_min=-0.005, n_max=0.005 per Uniform.
+
+Per i joint_vel_rel (velocità angolare): se l’errore di stima della velocità è nell’ordine di 0.01 rad/s, imposta rumore con std=0.01 o intervallo uniforme simile.
+
+In assenza di misure reali, puoi provare range piccoli (es. ±0.005–0.02) e verificare l’effetto su addestramento e sim2real. Spesso si esegue un’analisi di sensibilità (“ablation study”) variando std o n_max/n_min per capire la robustezza.
+
+
+
+2025-06-12_19-00-34 train con pos inziale nuova e noise su observation e su pos iniziale robot 
+            noise = GaussianNoiseCfg(
+            mean = 0.0,
+            std = 0.005,
+            operation = "add")
+        )
+        
+        MORTO SUBITO A 20 minuti
+        
+        
+        
+2025-06-12_19-44-16 solo noise su pos iniziale 

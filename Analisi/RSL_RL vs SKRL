@@ -1,0 +1,35 @@
+gym.register(
+    id="Moonshot-Velocity-Moon-Hero-Dragon-Play-v0_EDO",
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    disable_env_checker=True,
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.rough_env_cfg:HeroDragonMoonEnvCfg_PLAY_EDO",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:HeroDragonRoughPPORunnerCfg_EDO",
+        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_rough_ppo_cfg.yaml",
+    },
+)
+
+vuol dire che carico sul mabiente gym due librerie per rl: skrl e rsl rl. in train.py decido quale usare.
+
+
+from rsl_rl.runners import OnPolicyRunner
+from isaaclab_rl.rsl_rl import RslRlOnPolicyRunnerCfg, RslRlVecEnvWrapper
+
+
+questo si fa per usare skrl:
+
+from skrl.envs.wrappers.torch import wrap_env
+from skrl.trainers.torch import SequentialTrainer
+from skrl.agents.torch.ppo import PPO
+
+env = wrap_env(gym.make("Moonshot-Velocity-Moon-Hero-Dragon-Play-v0_EDO"))
+
+# Carichi la configurazione da YAML
+agent_cfg, model_cfg, memory_cfg, trainer_cfg = load_skrl_config("skrl_rough_ppo_cfg.yaml")
+
+# Crea modello, memoria, agente, trainer
+...
+trainer = SequentialTrainer(env=env, agents=agent, cfg=trainer_cfg)
+trainer.train()
+
+https://chatgpt.com/share/6800a459-fb90-8000-81f3-9fa785a9375d
