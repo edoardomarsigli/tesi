@@ -2,6 +2,9 @@ conda create -n env_isaaclab1 python=3.10
 
 
 conda activate env_isaaclab1
+cd SRL-IsaacLab
+HYDRA_FULL_ERROR=1 ./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/train.py --task Manipulation-HeroDragon-v0 --headless
+
 
 HYDRA_FULL_ERROR=1 ./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/train.py --task Manipulation-HeroDragon-Play-v0
 
@@ -12,7 +15,7 @@ HYDRA_FULL_ERROR=1 ./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py
 HYDRA_FULL_ERROR=1 ./isaaclab.sh -p scripts/reinforcement_learning/rsl_rl/train.py --task Manipulation-HeroDragon-v0 --headless
 
 python -m tensorboard.main --logdir logs/rsl_rl/hero_dragon_grasp
-
+python -m tensorboard.main --logdir logs/rsl_rl/dragon_grasp_analysis
 
 HYDRA_FULL_ERROR=1 ./isaaclab.sh -p scripts/reinforcement_learning/skrl/train.py --task Manipulation-HeroDragon-v0 --headless
 

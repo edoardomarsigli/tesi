@@ -33,3 +33,65 @@ In assenza di misure reali, puoi provare range piccoli (es. ±0.005–0.02) e ve
         
         
 2025-06-12_19-44-16 solo noise su pos iniziale 
+
+
+
+
+
+
+SIM2REAL
+
+train del 15 giugno il primo usato per sim2real non funziona, ma genera le azioni giuste su isaaclab se le salvo su json e le riutilizzo.
+
+
+
+2025-06-23_21-55-16 train con velocita finte ma senza velocita osservata. cosi la policy non usa la velocita nello stato per generare le azioni. dovrebbe funzionare. questo train usa gli hyper del 15 giugno 
+
+Altrimenti provo con velocita reali ma anche osservate. posso usare qualsiasi policy usata per l analisi degli hyper. train non funziona, velocita troppo basse.
+
+24 giugno
+
+Correggo i quaternioni. Adesso observations uguali in teoria. Live policy quasi funziona. Pero le azioni sono ancora strane. 
+
+25 giugno
+
+faccio training con azioni non clippate non scalate.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
