@@ -1,0 +1,1030 @@
+--- git status ---
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   parameter_analysis.csv
+	modified:   source/isaaclab/isaaclab/envs/manager_based_rl_env.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/config/moonbot_cfgs_edo.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/cabinet_env_cfg.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/__init__.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg_tesi.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/joint_pos_env_cfg.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/Event.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/observations.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/rewards.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	heatmap.csv
+	heatmap.py
+	joint_positions_robust.json
+	joint_positions_robust10.json
+	joint_positions_robust13.json
+	parameter_analysis (copy).csv
+	parameter_analysis2.csv
+	source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/usd/robot/boh/
+	source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/usd/robot/dragon_mt/
+	source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/usd/robot/hero_dragon_man_grasp/
+
+no changes added to commit (use "git add" and/or "git commit -a") 
+
+
+--- git diff ---
+diff --git a/parameter_analysis.csv b/parameter_analysis.csv
+index 53e80539..374082d0 100644
+--- a/parameter_analysis.csv
++++ b/parameter_analysis.csv
+@@ -1,8 +1,41 @@
+ run_name,num_steps_per_env,value_loss_coef,clip_param,entropy_coef,num_mini_batches,learning_rate,gamma,lam,desired_kl
+-std_ppo,64,1,0.2,0.0005,64,0.001,0.998,0.95,0.008
+-2025-06-25_23-49-13_lr_1e-4_clip_0.2,128,1,0.2,0.002,64,0.0001,0.99,0.95,0.008
+-2025-06-26_00-11-39_lr_1e-5_clip_0.2,128,1,0.2,0.002,64,0.00001,0.99,0.95,0.008
+-2025-06-26_00-12-13_lr_1e-3_clip_0.2,128,1,0.2,0.002,64,0.001,0.99,0.95,0.008
+-2025-06-26_12-11-59_lr_1e-2_clip_0.2,128,1,0.2,0.002,64,0.01,0.99,0.95,0.008
+-2025-06-26_12-12-12_lr_1e-2_clip_0.3,128,1,0.3,0.002,64,0.01,0.99,0.95,0.008
+-2025-06-26_12-12-26_lr_1e-3_clip_0.3,128,1,0.3,0.002,64,0.001,0.99,0.95,0.008
++std_ppo,64,1.0,0.2,0.0005,64,0.001,0.998,0.95,0.008
++2025-06-25_23-49-13_lr_1e-4_clip_0.2,128,1.0,0.2,0.002,64,0.0001,0.99,0.95,0.008
++2025-06-26_00-11-39_lr_1e-5_clip_0.2,128,1.0,0.2,0.002,64,1e-05,0.99,0.95,0.008
++2025-06-26_00-12-13_lr_1e-3_clip_0.2,128,1.0,0.2,0.002,64,0.001,0.99,0.95,0.008
++2025-06-26_12-11-59_lr_1e-2_clip_0.2,128,1.0,0.2,0.002,64,0.01,0.99,0.95,0.008
++2025-06-26_12-12-12_lr_1e-2_clip_0.3,128,1.0,0.3,0.002,64,0.01,0.99,0.95,0.008
++2025-06-26_12-12-26_lr_1e-3_clip_0.3,128,1.0,0.3,0.002,64,0.001,0.99,0.95,0.008
++2025-06-26_18-31-03_lr_1e-4_clip_0.3,128,1.0,0.3,0.002,64,0.0001,0.99,0.95,0.008
++2025-06-26_18-31-18_lr_1e-5_clip_0.3,128,1.0,0.3,0.002,64,1e-05,0.99,0.95,0.008
++2025-06-27_02-00-52_lr_1e-5_clip_0.1,128,1.0,0.1,0.002,64,1e-05,0.99,0.95,0.003
++2025-06-27_02-01-02_lr_1e-4_clip_0.1,128,1.0,0.1,0.002,64,0.0001,0.99,0.95,0.003
++2025-06-27_02-01-14_lr_1e-3_clip_0.1,128,1.0,0.1,0.002,64,0.001,0.99,0.95,0.003
++2025-06-27_12-31-02_lr_1e-2_clip_0.1,128,1.0,0.1,0.002,64,0.01,0.99,0.95,0.003
++2025-06-27_15-37-38_lr_1e-5_clip_0.05,128,1.0,0.05,0.002,64,1e-05,0.99,0.95,0.003
++2025-06-27_15-54-33_lr_1e-4_clip_0.05,128,1.0,0.05,0.002,64,0.0001,0.99,0.95,0.003
++2025-06-27_22-40-48_lr_1e-3_clip_0.05,128,1.0,0.05,0.002,64,0.001,0.99,0.95,0.003
++2025-06-27_22-41-01_lr_1e-2_clip_0.05,128,1.0,0.05,0.002,64,0.01,0.99,0.95,0.003
++2025-06-28_08-00-51_lam_0.99,128,1.0,0.2,0.002,64,0.0001,0.99,0.99,0.008
++2025-06-28_08-01-24_lam_0.91,128,1.0,0.2,0.002,64,0.0001,0.99,0.91,0.008
++2025-07-08_14-16-27_gamma_0.98,128,1.0,0.2,0.002,64,0.0001,0.98,0.95,0.008
++2025-07-08_14-16-46_gamma_0.95,128,1.0,0.2,0.002,64,0.0001,0.95,0.95,0.008
++2025-07-08_14-42-11_lr_1e-4_clip_0.2,128,1.0,0.2,0.002,64,0.0001,0.99,0.95,0.008
++2025-07-08_19-58-23_lr_1e-2_clip_0.2,128,1.0,0.2,0.002,64,0.01,0.99,0.95,0.008
++2025-07-08_20-42-26_lr_1e-5_clip_0.1,128,1.0,0.1,0.002,64,1e-05,0.99,0.95,0.003
++2025-07-08_20-42-37_lr_1e-2_clip_0.1,128,1.0,0.1,0.002,64,0.01,0.99,0.95,0.003
++2025-07-10_00-33-13_lam_0.99,128,1.0,0.2,0.002,64,0.01,0.99,0.99,0.008
++ 2025-07-10_00-33-26_lam_0.91,128,1.0,0.2,0.002,64,0.01,0.99,0.91,0.008
++2025-07-10_08-29-39_lam_0.99,128,1.0,0.1,0.002,64,0.0001,0.99,0.99,0.003
++2025-07-10_08-29-59_lam_0.91,128,1.0,0.1,0.002,64,0.0001,0.99,0.91,0.003
++2025-07-10_08-32-45_gamma_0.98,128,1.0,0.2,0.002,64,0.01,0.98,0.91,0.008
++2025-07-10_11-36-31_gamma_0.98,128,1.0,0.2,0.002,64,0.01,0.98,0.91,0.008
++2025-07-10_15-37-32_gamma_0.95,128,1.0,0.2,0.002,64,0.01,0.98,0.91,0.008
++2025-07-10_15-39-16_gamma_0.95,128,1.0,0.2,0.002,64,0.01,0.95,0.91,0.008
++2025-07-10_15-46-28_gamma_0.98,128,1.0,0.1,0.002,64,0.0001,0.98,0.91,0.003
++2025-07-10_15-46-41_gamma_0.95,128,1.0,0.1,0.002,64,0.0001,0.95,0.91,0.003
++2025-07-11_00-30-42_entr_2e-2,128,1.0,0.1,0.02,64,0.0001,0.95,0.91,0.003
++2025-07-11_00-31-01_entr_2e-4,128,1.0,0.1,0.0002,64,0.0001,0.95,0.91,0.003
++2025-07-11_00-31-19_entr_2e-5,128,1.0,0.1,2e-05,64,0.0001,0.95,0.91,0.003
++2025-07-11_09-38-52_value_loss_0.5,128,0.5,0.1,0.002,64,0.0001,0.95,0.91,0.003
++2025-07-11_09-41-36_value_loss_2.0,128,2.0,0.1,0.002,64,0.0001,0.95,0.91,0.003
+diff --git a/source/isaaclab/isaaclab/envs/manager_based_rl_env.py b/source/isaaclab/isaaclab/envs/manager_based_rl_env.py
+index a50b325b..96b3fb04 100644
+--- a/source/isaaclab/isaaclab/envs/manager_based_rl_env.py
++++ b/source/isaaclab/isaaclab/envs/manager_based_rl_env.py
+@@ -357,7 +357,7 @@ class ManagerBasedRLEnv(ManagerBasedEnv, gym.Env):
+         #         }
+ 
+         #     # Save to JSON file
+-        #     output_file = "joint_positions3.json"
++        #     output_file = "joint_positions_robust10abs.json"
+ 
+         #     # If you want to accumulate steps, load existing first
+         #     if os.path.exists(output_file):
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/config/moonbot_cfgs_edo.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/config/moonbot_cfgs_edo.py
+index 59297fd6..f8083aa6 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/config/moonbot_cfgs_edo.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/config/moonbot_cfgs_edo.py
+@@ -23,7 +23,7 @@ Joint velocity limits are in rad/s (revolute), m/s (prismatic)
+ Joint effort limits are in N*m (revolute), N (prismatic)
+ 
+ '''
+-scale= 10
++scale=10
+ scale2=100
+ 
+ DRAGON_ARTICULATED_CFG = ArticulationCfg(
+@@ -31,6 +31,7 @@ DRAGON_ARTICULATED_CFG = ArticulationCfg(
+     spawn=sim_utils.UsdFileCfg(
+         # usd_path=ISAAC_LAB_PATH + "/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/usd/robot/Hero_dragon_grip/hero_dragon_gripPY.usd",
+         usd_path=ISAAC_LAB_PATH + "/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/usd/robot/hero_dragon_man/hero_dragon.usd",
++        # usd_path=ISAAC_LAB_PATH + "/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/usd/robot/dragon_mt/dragon.usd",
+ 
+         rigid_props=sim_utils.RigidBodyPropertiesCfg(
+             rigid_body_enabled=True,
+@@ -50,6 +51,7 @@ DRAGON_ARTICULATED_CFG = ArticulationCfg(
+     ),
+     init_state=ArticulationCfg.InitialStateCfg(
+     pos=(0.0, 0.0, 0.3),
++
+     # joint_pos={"leg2joint1":0.0, "leg2joint2":math.radians(135), "leg2joint3":0.0, "leg2joint4":math.radians(170), 
+     #            "leg2joint5":0.0, "leg2joint6":math.radians(170), "leg2joint7":0.0},
+     # ),
+@@ -66,49 +68,49 @@ DRAGON_ARTICULATED_CFG = ArticulationCfg(
+     # "leg2joint1": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint1"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness = scale2*0.966,
+     #     damping = scale2*0.234,
+     # ),
+     # "leg2joint2": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint2"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness = scale2*0.966,
+     #     damping = scale2*0.234,
+     # ),
+     # "leg2joint3": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint3"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness = scale2*0.966,
+     #     damping =scale2* 0.234,
+     # ),
+     # "leg2joint4": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint4"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness = scale2*0.966,
+     #     damping = scale2*0.234,
+     # ),
+     # "leg2joint5": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint5"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness = scale2*0.966,
+     #     damping = scale2*0.234,
+     # ),
+     # "leg2joint6": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint6"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness = scale2*0.966,
+     #     damping = scale2*0.234,
+     # ),
+     # "leg2joint7": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint7"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness =scale2*0.966,
+     #     damping = scale2*0.234,
+     # ),
+@@ -162,7 +164,22 @@ DRAGON_ARTICULATED_CFG = ArticulationCfg(
+         stiffness =scale2*0.966,
+         damping = scale2*0.234,
+     ),
+-    },
++    # "gripper1joint1": ImplicitActuatorCfg(
++    #     joint_names_expr=["gripper1joint1"],
++    #     effort_limit_sim=scale2*136.11,
++    #     velocity_limit_sim=scale*0.15,
++    #     stiffness = scale2*0.966,
++    #     damping = scale2*0.234,
++    # ),
++    # "gripper1joint2": ImplicitActuatorCfg(
++    #     joint_names_expr=["gripper1joint2"],
++    #     effort_limit_sim=scale2*136.11,
++    #     velocity_limit_sim=scale*0.15,
++    #     stiffness = scale2*0.966,
++    #     damping = scale2*0.234,
++    # ),
++   
++ },
+ )
+ 
+ WHEEL_WITH_HANDLE_CFG = ArticulationCfg(
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/cabinet_env_cfg.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/cabinet_env_cfg.py
+index b9bd076b..806bcccf 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/cabinet_env_cfg.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/cabinet_env_cfg.py
+@@ -110,35 +110,6 @@ class DragonGraspSceneCfg(InteractiveSceneCfg):
+     # debug_vis=False,
+     # )
+ 
+-    # contact_sensor_left1 = ContactSensorCfg(
+-    #     prim_path="{ENV_REGEX_NS}/hero_dragon/leg2gripper2_jaw_left",
+-    #     filter_prim_paths_expr=["{ENV_REGEX_NS}/hero_wheel/wheel11_left"],  # o "{ENV_REGEX_NS}/hero_wheel/wheel11_out" se vuoi la maniglia specifica
+-    #     track_air_time=True,
+-    #     track_pose=True,
+-    #     force_threshold=1.0,
+-    # )
+-    # contact_sensor_left2 = ContactSensorCfg(
+-    #     prim_path="{ENV_REGEX_NS}/hero_dragon/leg2gripper2_jaw_left",
+-    #     filter_prim_paths_expr=["{ENV_REGEX_NS}/hero_wheel/wheel11_right"],  # o "{ENV_REGEX_NS}/hero_wheel/wheel11_out" se vuoi la maniglia specifica
+-    #     track_air_time=True,
+-    #     track_pose=True,
+-    #     force_threshold=1.0,
+-    # )
+-    # contact_sensor_right1 = ContactSensorCfg(
+-    #     prim_path="{ENV_REGEX_NS}/hero_dragon/leg2gripper2_jaw_right",
+-    #     filter_prim_paths_expr=["{ENV_REGEX_NS}/hero_wheel/wheel11_left"],  # o "{ENV_REGEX_NS}/hero_wheel/wheel11_out" se vuoi la maniglia specifica
+-    #     track_air_time=True,
+-    #     track_pose=True,
+-    #     force_threshold=1.0,
+-    # )
+-    # contact_sensor_right2 = ContactSensorCfg(
+-    #     prim_path="{ENV_REGEX_NS}/hero_dragon/leg2gripper2_jaw_right",
+-    #     filter_prim_paths_expr=["{ENV_REGEX_NS}/hero_wheel/wheel11_right"],  # o "{ENV_REGEX_NS}/hero_wheel/wheel11_out" se vuoi la maniglia specifica
+-    #     track_air_time=True,
+-    #     track_pose=True,
+-    #     force_threshold=1.0,
+-    # )
+-
+ 
+     handle_frame=FrameTransformerCfg(
+         prim_path="{ENV_REGEX_NS}/hero_wheel/wheel11_out",
+@@ -153,58 +124,6 @@ class DragonGraspSceneCfg(InteractiveSceneCfg):
+         ],
+     )
+ 
+-    rf2_frame=FrameTransformerCfg(
+-        prim_path="{ENV_REGEX_NS}/hero_dragon/leg2gripper2_jaw_right",  #associato a giunto grip2bis
+-        debug_vis=False,
+-        visualizer_cfg=FRAME_MARKER_SMALL_CFG.replace(prim_path="/Visuals/RFFrame"),
+-        target_frames=[
+-            FrameTransformerCfg.FrameCfg(
+-                prim_path="{ENV_REGEX_NS}/hero_dragon/leg2gripper2_jaw_right",
+-                name="rf2",
+-                offset=OffsetCfg(pos=(0.0, 0.0, 0.0)),
+-            )
+-        ],
+-    )
+-
+-    # lf2_frame=FrameTransformerCfg(
+-    #     prim_path="{ENV_REGEX_NS}/hero_dragon/leg2gripper2_jaw_left",   #associato a giunto grip2
+-    #     debug_vis=False,
+-    #     visualizer_cfg=FRAME_MARKER_SMALL_CFG.replace(prim_path="/Visuals/LFFrame"),
+-    #     target_frames=[
+-    #         FrameTransformerCfg.FrameCfg(
+-    #             prim_path="{ENV_REGEX_NS}/hero_dragon/leg2gripper2_jaw_left",
+-    #             name="lf2",
+-    #             offset=OffsetCfg(pos=(0.0, 0.0, 0.0)),
+-    #         )
+-    #     ],
+-    # )
+-
+-    # rf1_frame=FrameTransformerCfg(
+-    #     prim_path="{ENV_REGEX_NS}/hero_dragon/leg2gripper1_jaw_right",  #associato a giunto grip1
+-    #     debug_vis=False, 
+-    #     visualizer_cfg=FRAME_MARKER_SMALL_CFG.replace(prim_path="/Visuals/RFFrame"),
+-    #     target_frames=[
+-    #         FrameTransformerCfg.FrameCfg(
+-    #             prim_path="{ENV_REGEX_NS}/hero_dragon/leg2gripper1_jaw_right",
+-    #             name="rf1",
+-    #             offset=OffsetCfg(pos=(0.0, 0.0, 0.0)),
+-    #         )
+-    #     ],
+-    # )
+-
+-    # lf1_frame=FrameTransformerCfg(
+-    #     prim_path="{ENV_REGEX_NS}/hero_dragon/leg2gripper1_jaw_left", #associato a giunto grip1bis
+-    #     debug_vis=False,
+-    #     visualizer_cfg=FRAME_MARKER_SMALL_CFG.replace(prim_path="/Visuals/LFFrame"),
+-    #     target_frames=[
+-    #         FrameTransformerCfg.FrameCfg(
+-    #             prim_path="{ENV_REGEX_NS}/hero_dragon/leg2gripper1_jaw_left",
+-    #             name="lf1",
+-    #             offset=OffsetCfg(pos=(0.0, 0.0, 0.0)),
+-    #         )
+-    #     ],
+-    # )
+-
+     joint4_frame=FrameTransformerCfg(
+         prim_path="{ENV_REGEX_NS}/hero_dragon/leg2link4",
+         debug_vis=True,
+@@ -242,6 +161,7 @@ class DragonGraspSceneCfg(InteractiveSceneCfg):
+             )
+         ],
+     )
++    
+ 
+     wheel_frame=FrameTransformerCfg(
+         prim_path="{ENV_REGEX_NS}/hero_dragon/base_link",
+@@ -304,7 +224,7 @@ class ObservationsCfg:
+             func=mdp.joint_pos_rel,
+     #         noise = GaussianNoiseCfg(
+     #         mean = 0.0,
+-    #         std = 0.005,
++    #         std = 0.0,
+     #         operation = "add"
+     # ),
+         )
+@@ -321,10 +241,14 @@ class ObservationsCfg:
+ 
+         ee_quat = ObsTerm(func=mdp.ee_quat)
+ 
++        # ee_orientation = ObsTerm(func=mdp.ee_orientation)
++
+         handle_pos = ObsTerm(func=mdp.handle_pos)
+ 
+         handle_quat = ObsTerm(func=mdp.handle_quat)
+ 
++        # handle_orientation = ObsTerm(func=mdp.handle_orientation)
++
+ 
+         actions = ObsTerm(func=mdp.last_action) #da aggiungere piu avanti
+ 
+@@ -340,17 +264,17 @@ class ObservationsCfg:
+ class EventCfg:
+     """Configuration for events."""
+ 
+-    robot_physics_material = EventTerm(      #serve per domain randomization per far imparare a muovere il robot con fisica variabile
+-        func=mdp_events.randomize_rigid_body_material,
+-        mode="startup",
+-        params={
+-            "asset_cfg": SceneEntityCfg("robot", body_names=".*"),
+-            "static_friction_range": (0.6, 1),
+-            "dynamic_friction_range": (0.5, 0.9),
+-            "restitution_range": (0.0, 0.1),
+-            "num_buckets": 16,
+-        },
+-    )
++    # robot_physics_material = EventTerm(      #serve per domain randomization per far imparare a muovere il robot con fisica variabile
++    #     func=mdp_events.randomize_rigid_body_material,
++    #     mode="startup",
++    #     params={
++    #         "asset_cfg": SceneEntityCfg("robot", body_names=".*"),
++    #         "static_friction_range": (0.6, 1),
++    #         "dynamic_friction_range": (0.5, 0.9),
++    #         "restitution_range": (0.0, 0.1),
++    #         "num_buckets": 16,
++    #     },
++    # )
+ 
+ 
+     # reset_all = EventTerm(func=mdp_events.reset_scene_to_default, mode="reset")
+@@ -389,29 +313,34 @@ class EventCfg:
+             "asset_cfg": SceneEntityCfg("robot"),
+         },
+     )
+-    reset_target_position = EventTerm(
+-        func=mdp_events.reset_root_state_uniform,
+-        mode="reset",
+-        params={
+-            "pose_range": {
+-                "x": (-0.5, 0.3),
+-                "y": (-0.5, 0.5),
+-                "z": (0.0, 0.0),
+-                "roll": (0.0, 0.0),
+-                "pitch": (0.0, 0.0),
+-                "yaw": (-0.1, 0.1),
+-            },
+-            "velocity_range": {
+-                "x": (0, 0),
+-                "y": (0, 0),
+-                "z": (0.0, 0.0),
+-                "roll": (0.0, 0.0),
+-                "pitch": (0.0, 0.0),
+-                "yaw": (0.0, 0.0),
+-            },
+-            "asset_cfg": SceneEntityCfg("wheel_with_handle"),
+-        },
+-    )
++    # reset_target_position = EventTerm(
++    #     func=mdp_events.reset_root_state_uniform,
++    #     mode="reset",
++    #     params={
++    #         "pose_range": {
++    #             "x": (-0.2, 0.2),
++    #             "y": (-0.2, 0.2),
++    #             "z": (0.0, 0.0),
++    #             "roll": (0.0, 0.0),
++    #             "pitch": (0.0, 0.0),
++    #             "yaw": (-0.1, 0.1),
++    #         },
++    #         "velocity_range": {
++    #             "x": (0, 0),
++    #             "y": (0, 0),
++    #             "z": (0.0, 0.0),
++    #             "roll": (0.0, 0.0),
++    #             "pitch": (0.0, 0.0),
++    #             "yaw": (0.0, 0.0),
++    #         },
++    #         "asset_cfg": SceneEntityCfg("wheel_with_handle"),
++    #     },
++    # )
++
++    # freeze_on_success = EventTerm(
++    #     func=mdp_events.freeze_robot_joints_on_success,
++    #     mode="step"   # viene chiamato ad ogni simulazione
++    # )
+ 
+ 
+ 
+@@ -481,23 +410,29 @@ class RewardsCfg:   #reward con curriculum
+ 
+     align_ee_handle = RewTerm(func=mdp.align_ee_handle_curriculum_wrapped, weight=1)
+     
+-    penalize_low_joints = RewTerm(func=mdp.penalize_low_joints_curriculum, weight=-1, params={"threshold4": 0.25, "threshold_ee": 0.25})
+-    
+-    reward_joint4_zyx = RewTerm(func=mdp.reward_joint4_zyx, weight=0.2)
+-    
+     approach_zy = RewTerm(func=mdp.approach_zy_curriculum_wrapped, weight=2.0)
+         
+     approach_x = RewTerm(func=mdp.approach_x_curriculum_wrapped, weight=2.0)
+ 
++    # align_ee_handle = RewTerm(func=mdp.align_ee_handle_relaxed, weight=1)
++
++    # approach_zy = RewTerm(func=mdp.approach_zy_relaxed, weight=2.0)
++
++    # approach_x = RewTerm(func=mdp.approach_x_relaxed, weight=2.0)
++
++    penalize_low_joints = RewTerm(func=mdp.penalize_low_joints_curriculum, weight=-1, params={"threshold4": 0.25, "threshold_ee": 0.25})
++    
++    reward_joint4_zyx = RewTerm(func=mdp.reward_joint4_zyx, weight=0.1)
++
+     penalty_touch = RewTerm(func=mdp.penalty_touch, weight=-1.0)
+ 
+     penalty_wheel = RewTerm(func=mdp.penalty_wheel, weight=-100.0)
+ 
+-    penalize_collision = RewTerm(func=mdp.penalize_collision, weight=-5.0)
++    penalize_collision = RewTerm(func=mdp.penalize_collision, weight=-10.0)
+ 
+     dof_torques_l2 = RewTerm(func=mdp.joint_torques_l2, weight=-1.0e-5)
+ 
+-    # termination_penalty = RewTerm(func=mdp.is_terminated, weight=-400)
++    termination_penalty = RewTerm(func=mdp.is_terminated, weight=-400)
+ 
+     #APPROACH GRASP
+ 
+@@ -523,13 +458,13 @@ class TerminationsCfg:
+ 
+     low_arm = DoneTerm(func=mdp_events.terminate_if_low, params={"threshold4": 0.15, "threshold6": 0.15, "threshold_ee": 0.15})
+ 
+-    wheel_z = DoneTerm(func=mdp_events.terminate_wheel_z, params={"threshold": 0.35})
++    wheel_z = DoneTerm(func=mdp_events.terminate_wheel_z, params={"threshold": 0.55})
+ 
+     # wheel = DoneTerm(func=mdp_events.terminate_wheel)
+ 
+     collision = DoneTerm(func=mdp_events.collision_termination)
+ 
+-    # target_termination = DoneTerm(func=mdp_events.handle_drift_termination)
++    target_termination = DoneTerm(func=mdp_events.handle_drift_termination)
+ 
+ @configclass
+ class RecorderCfg(ActionStateRecorderManagerCfg):
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/__init__.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/__init__.py
+index b33318a8..4f16af02 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/__init__.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/__init__.py
+@@ -15,52 +15,52 @@ from . import agents
+ # Joint Position Control - HeroDragon
+ ##
+ 
+-gym.register(
+-    id="Manipulation-HeroDragon-v0",
+-    entry_point="isaaclab_tasks.manager_based.moonshot.manipulation.cabinet.HeroDragonGraspEnv:HeroDragonGraspEnv",
+-    kwargs={
+-        "env_cfg_entry_point": f"{__name__}.joint_pos_env_cfg:HeroDragonGraspEnvCfg",
+-        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:HeroDragonGraspPPORunnerCfg",
+-        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
+-        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+-    },
+-    disable_env_checker=True,
+-)
+-
+-
+-
+-gym.register(
+-    id="Manipulation-HeroDragon-Play-v0",
+-    entry_point="isaaclab_tasks.manager_based.moonshot.manipulation.cabinet.HeroDragonGraspEnv:HeroDragonGraspEnv",
+-    kwargs={
+-        "env_cfg_entry_point": f"{__name__}.joint_pos_env_cfg:HeroDragonGraspEnvCfg_PLAY",
+-        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:HeroDragonGraspPPORunnerCfg",
+-        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
+-        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+-    },
+-    disable_env_checker=True,
+-)
+-
+-# gym.register(                #TESI
++# gym.register(
+ #     id="Manipulation-HeroDragon-v0",
+ #     entry_point="isaaclab_tasks.manager_based.moonshot.manipulation.cabinet.HeroDragonGraspEnv:HeroDragonGraspEnv",
+ #     kwargs={
+ #         "env_cfg_entry_point": f"{__name__}.joint_pos_env_cfg:HeroDragonGraspEnvCfg",
+-#         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg_tesi:HeroDragonGraspPPORunnerCfg2",
++#         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:HeroDragonGraspPPORunnerCfg",
+ #         "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
+ #         "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+ #     },
+ #     disable_env_checker=True,
+ # )
+ 
+-# gym.register(   #TESI
++
++
++# gym.register(
+ #     id="Manipulation-HeroDragon-Play-v0",
+ #     entry_point="isaaclab_tasks.manager_based.moonshot.manipulation.cabinet.HeroDragonGraspEnv:HeroDragonGraspEnv",
+ #     kwargs={
+ #         "env_cfg_entry_point": f"{__name__}.joint_pos_env_cfg:HeroDragonGraspEnvCfg_PLAY",
+-#         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg_tesi:HeroDragonGraspPPORunnerCfg2",
++#         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:HeroDragonGraspPPORunnerCfg",
+ #         "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
+ #         "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+ #     },
+ #     disable_env_checker=True,
+-# )
+\ No newline at end of file
++# )
++
++gym.register(                #TESI
++    id="Manipulation-HeroDragon-v0",
++    entry_point="isaaclab_tasks.manager_based.moonshot.manipulation.cabinet.HeroDragonGraspEnv:HeroDragonGraspEnv",
++    kwargs={
++        "env_cfg_entry_point": f"{__name__}.joint_pos_env_cfg:HeroDragonGraspEnvCfg",
++        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg_tesi:HeroDragonGraspPPORunnerCfg2",
++        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
++        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
++    },
++    disable_env_checker=True,
++)
++
++gym.register(   #TESI
++    id="Manipulation-HeroDragon-Play-v0",
++    entry_point="isaaclab_tasks.manager_based.moonshot.manipulation.cabinet.HeroDragonGraspEnv:HeroDragonGraspEnv",
++    kwargs={
++        "env_cfg_entry_point": f"{__name__}.joint_pos_env_cfg:HeroDragonGraspEnvCfg_PLAY",
++        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg_tesi:HeroDragonGraspPPORunnerCfg2",
++        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
++        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
++    },
++    disable_env_checker=True,
++)
+\ No newline at end of file
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg.py
+index aabdffc6..cd57cf93 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg.py
+@@ -10,15 +10,21 @@ from isaaclab_rl.rsl_rl import RslRlOnPolicyRunnerCfg, RslRlPpoActorCriticCfg, R
+ 
+ @configclass
+ class HeroDragonGraspPPORunnerCfg(RslRlOnPolicyRunnerCfg):
+-    num_steps_per_env = 64
++    num_steps_per_env = 128
+     max_iterations = 20000
+     save_interval = 1000
+     experiment_name = "hero_dragon_grasp"
+     empirical_normalization = False
+     policy = RslRlPpoActorCriticCfg(
+         init_noise_std=1.0,
+-        actor_hidden_dims=[128, 64],
+-        critic_hidden_dims=[128, 64],
++        # actor_hidden_dims=[128, 64],
++        # critic_hidden_dims=[128, 64],
++        actor_hidden_dims=[256, 128, 64],
++        critic_hidden_dims=[256, 128, 64],
++        # actor_hidden_dims=[128, 64, 32],
++        # critic_hidden_dims=[128, 64, 32],
++        # actor_hidden_dims=[64, 32],
++        # critic_hidden_dims=[64, 32],
+         activation="elu",        
+     )
+     algorithm = RslRlPpoAlgorithmCfg(
+@@ -27,10 +33,10 @@ class HeroDragonGraspPPORunnerCfg(RslRlOnPolicyRunnerCfg):
+         clip_param=0.2,
+         entropy_coef=2e-3,
+         num_learning_epochs=10,
+-        num_mini_batches=64,
+-        learning_rate=1.0e-3,
++        num_mini_batches=48,
++        learning_rate=1.0e-4,
+         schedule="adaptive",
+-        gamma=0.99,
++        gamma=0.999,
+         lam=0.95,
+         desired_kl=0.008,
+         max_grad_norm=0.5,
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg_tesi.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg_tesi.py
+index ef4d9066..9c3a0410 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg_tesi.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg_tesi.py
+@@ -16,7 +16,7 @@ from datetime import datetime
+ 
+ @configclass
+ class HeroDragonGraspPPORunnerCfg2(RslRlOnPolicyRunnerCfg):
+-    run_name = "lr_1e-3_clip_0.3"  # nome della run, usato per il CSV
++    run_name = "value_loss_2.0"  # nome della run, usato per il CSV
+     num_steps_per_env = 128
+     max_iterations = 1000
+     save_interval = 100
+@@ -29,17 +29,17 @@ class HeroDragonGraspPPORunnerCfg2(RslRlOnPolicyRunnerCfg):
+         activation="elu",        
+     )
+     algorithm = RslRlPpoAlgorithmCfg(
+-        value_loss_coef=1.0,
++        value_loss_coef=2.0,
+         use_clipped_value_loss=True,
+-        clip_param=0.3,
++        clip_param=0.1,
+         entropy_coef=2e-3,
+         num_learning_epochs=10,
+         num_mini_batches=64,
+-        learning_rate=1.0e-3,
++        learning_rate=1.0e-4,
+         schedule="adaptive",
+-        gamma=0.99,
+-        lam=0.95,
+-        desired_kl=0.008,
++        gamma=0.95,
++        lam=0.91,
++        desired_kl=0.003,
+         max_grad_norm=0.5,
+     )
+ 
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/joint_pos_env_cfg.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/joint_pos_env_cfg.py
+index 37e1b72b..43c8c4cf 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/joint_pos_env_cfg.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/joint_pos_env_cfg.py
+@@ -85,56 +85,64 @@ class HeroDragonGraspEnvCfg(DragonGraspEnvCfg):
+             asset_name="robot",
+             joint_names=["leg2joint1"],
+             # scale=3.1,
+-            # clip={"leg2joint1": (-3.1, 3.1)},
++            clip={"leg2joint1": (-3.1, 3.1)},
+         )
+ 
+         self.actions.j2_action = mdp.JointPositionActionCfg(
+             asset_name="robot",
+             joint_names=["leg2joint2"],
+             # scale=3.1,
+-            # clip={"leg2joint2": (-3.1, 3.1)},
++            clip={"leg2joint2": (-3.1, 3.1)},
+         )
+ 
+         self.actions.j3_action = mdp.JointPositionActionCfg(
+             asset_name="robot",
+             joint_names=["leg2joint3"],
+             # scale=3.1,
+-            # clip={"leg2joint3": (-3.1, 3.1)},
++            clip={"leg2joint3": (-3.1, 3.1)},
+         )
+ 
+         self.actions.j4_action = mdp.JointPositionActionCfg(
+             asset_name="robot",
+             joint_names=["leg2joint4"],
+             # scale=3.1,
+-            # clip={"leg2joint4": (-3.1, 3.1)},
++            clip={"leg2joint4": (-3.1, 3.1)},
+         )
+ 
+         self.actions.j5_action = mdp.JointPositionActionCfg(
+             asset_name="robot",
+             joint_names=["leg2joint5"],
+             # scale=3.1,
+-            # clip={"leg2joint5": (-3.1, 3.1)},
++            clip={"leg2joint5": (-3.1, 3.1)},
+         )
+ 
+         self.actions.j6_action = mdp.JointPositionActionCfg(
+             asset_name="robot",
+             joint_names=["leg2joint6"],
+             # scale=3.1,
+-            # clip={"leg2joint6": (-3.1, 3.1)},
++            clip={"leg2joint6": (-3.1, 3.1)},
+         )
+ 
+         self.actions.j7_action = mdp.JointPositionActionCfg(
+             asset_name="robot",
+             joint_names=["leg2joint7"],
+             # scale=3.1,
+-            # clip={"leg2joint7": (-3.1, 3.1)},
++            clip={"leg2joint7": (-3.1, 3.1)},
+         )
+ 
++        # self.actions.g1_action = mdp.JointPositionActionCfg(
++        #     asset_name="robot",
++        #     joint_names=["gripper1joint1"],
++        #     # scale=3.1,
++        #     clip={"gripper1joint1": (-0.25, 0.1)},
++        # )
+ 
+-
+-
+-
+-
++        # self.actions.g2_action = mdp.JointPositionActionCfg(
++        #     asset_name="robot",
++        #     joint_names=["gripper1joint2"],
++        #     # scale=3.1,
++        #     clip={"gripper1joint2": (-0.25, 0.1)},
++        # )
+ 
+ 
+ @configclass
+@@ -142,7 +150,7 @@ class HeroDragonGraspEnvCfg_PLAY(HeroDragonGraspEnvCfg):
+     def __post_init__(self):
+         super().__post_init__()
+ 
+-        self.scene.num_envs = 8
++        self.scene.num_envs = 2
+     
+         self.scene.env_spacing = 6
+ 
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/Event.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/Event.py
+index 3625cb31..d11d0a61 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/Event.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/Event.py
+@@ -266,3 +266,33 @@ def handle_drift_termination(env: ManagerBasedRLEnv) -> torch.Tensor:
+ reset_root_state_uniform = base_events.reset_root_state_uniform
+ 
+ 
++def freeze_robot_joints_on_success(env: ManagerBasedRLEnv) -> None:
++    """
++    Quando is_grasp_successful==True, azzera velocity-target
++    e imposta drive stiffness/damping molto alti per "bloccare" i giunti.
++    """
++    success_mask = is_grasp_successful(env)  # BoolTensor (N,)
++    if not torch.any(success_mask):
++        return
++
++    art = env.scene.entities["robot"].articulation
++    dof_count = art.dof_count
++
++    # vettori di zeri e drive “rigidi”
++    zero_vel = [0.0] * dof_count
++    stiff   = [1e6]  * dof_count
++    damp    = [1e3]  * dof_count
++
++    # blocca solo gli env con successo
++    idxs = success_mask.nonzero(as_tuple=False).squeeze(-1).tolist()
++    for i in idxs:
++        # annulla qualunque comando di velocity-target
++        art.set_dof_velocity_targets(i, zero_vel)
++        # imposta drive stiffness & damping elevati
++        art.set_drive_property(
++            i,
++            joint_indices=list(range(dof_count)),
++            stiffness=stiff,
++            damping=damp
++        )
++
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/observations.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/observations.py
+index b726aab7..f42da8d0 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/observations.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/observations.py
+@@ -98,6 +98,30 @@ def ee_quat(env: ManagerBasedRLEnv, make_quat_unique: bool = True) -> torch.Tens
+         return torch.tensor([[0.0, 0.0, 0.0, 1.0]] * env.num_envs, device=env.device)
+     
+ 
++def ee_orientation(
++    env: ManagerBasedRLEnv,
++    make_quat_unique: bool = True
++) -> torch.Tensor:
++    try:
++        # prendi il quaternion (N,4)
++        ee_tf_data: FrameTransformerData = env.scene["ee_frame"].data
++        ee_quat = ee_tf_data.target_quat_w[..., 0, :]  # shape: (num_envs, 4)
++
++        # rendi univoco il quaternion (opzionale)
++        if make_quat_unique:
++            ee_quat = math_utils.quat_unique(ee_quat)
++
++        # converti in matrici di rotazione (num_envs, 3, 3)
++        ee_rot = math_utils.matrix_from_quat(ee_quat)
++        return ee_rot
++
++    except (KeyError, AttributeError):
++        # frame non disponibile: ritorna matrici identità
++        I = torch.eye(3, device=env.device)                   # (3,3)
++        return I.unsqueeze(0).repeat(env.num_envs, 1, 1)      # (num_envs,3,3)
++
++    
++
+ def handle_quat(env: ManagerBasedRLEnv, make_quat_unique: bool = True) -> torch.Tensor:
+     """Returns the orientation (quaternion) of the end-effector in the world frame.
+     If `make_quat_unique` is True, ensures the quaternion has a positive real part to avoid discontinuities.
+@@ -111,6 +135,29 @@ def handle_quat(env: ManagerBasedRLEnv, make_quat_unique: bool = True) -> torch.
+         # Se il frame non è pronto, ritorna quaternioni identità (0, 0, 0, 1)
+         return torch.tensor([[0.0, 0.0, 0.0, 1.0]] * env.num_envs, device=env.device)
+     
++def handle_orientation(
++    env: ManagerBasedRLEnv,
++    make_quat_unique: bool = True
++) -> torch.Tensor:
++    try:
++        # prendi il quaternion (N,4)
++        handle_tf_data: FrameTransformerData = env.scene["handle_frame"].data
++        handle_quat = handle_tf_data.target_quat_w[..., 0, :]  # shape: (num_envs, 4)
++
++        # rendi univoco il quaternion (opzionale)
++        if make_quat_unique:
++            handle_quat = math_utils.quat_unique(handle_quat)
++
++        # converti in matrici di rotazione (num_envs, 3, 3)
++        handle_rot = math_utils.matrix_from_quat(handle_quat)
++        return handle_rot
++
++    except (KeyError, AttributeError):
++        # frame non disponibile: ritorna matrici identità
++        I = torch.eye(3, device=env.device)                   # (3,3)
++        return I.unsqueeze(0).repeat(env.num_envs, 1, 1)      # (num_envs,3,3)
++
++    
+ 
+ def gripper1_pos(env: ManagerBasedRLEnv) -> torch.Tensor:
+     """Returns the joint position of gripper1 (leg2grip1)."""
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/rewards.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/rewards.py
+index 85239787..fa5ab3b9 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/rewards.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/rewards.py
+@@ -146,10 +146,13 @@ def penalize_low_joints(env, threshold4, threshold_ee)-> torch.Tensor:
+ 
+         # Penalità proporzionale alla distanza sotto soglia (opzionale)
+         error_ee = threshold_ee - ee_z
++        reward_ee = 1.0 / (1.0 + ee_z*s)  # peso regolabile
++        
+         error_joint4 = threshold4 - joint4_z
++        reward_joint4 = 1.0 / (1.0 + joint4_z*s)  # peso regolabile
+ 
+-        penalty_ee = torch.where(below_threshold_ee, error_ee, torch.zeros_like(ee_z),)          # peso regolabile
+-        penalty_joint4= torch.where(below_threshold_joint4, error_joint4, torch.zeros_like(ee_z),)  # peso regolabile
++        penalty_ee = torch.where(below_threshold_ee, reward_ee, torch.zeros_like(ee_z),)          # peso regolabile
++        penalty_joint4= torch.where(below_threshold_joint4, reward_joint4, torch.zeros_like(ee_z),)  # peso regolabile
+ 
+         return (penalty_ee*0.5 +penalty_joint4*0.5) # <-- qui controlli quanto vuoi punire
+ 
+@@ -251,7 +254,7 @@ def approach_x(env: ManagerBasedRLEnv) -> torch.Tensor: #allineamento z solo se
+         x_reward = 1.0 / (1.0 + x_distance*s)
+ 
+ 
+-        adaptive_threshold = 0.8 * x_distance + 0.05 #cono di threshold
++        adaptive_threshold = 0.8* x_distance + 0.05 #cono di threshold
+         # Step 4: Applica solo se XY è vicino
+         return torch.where(distance_yz <= adaptive_threshold, x_reward, torch.zeros_like(x_reward))
+ 
+@@ -482,8 +485,10 @@ def penalize_collision(env)-> torch.Tensor:
+ 
+         distance = torch.norm(joint2_pos - joint6_pos, dim=-1, p=2)
+ 
++        reward = 1.0 / (1.0 + distance*s)  # reward inversamente proporzionale alla distanza
++
+         # Penalità proporzionale alla distanza sotto soglia (opzionale)
+-        return torch.where(distance < 0.3, 0.3 - distance ,torch.zeros(env.num_envs, device=env.device))
++        return torch.where(distance < 0.25, reward ,torch.zeros(env.num_envs, device=env.device))
+ 
+     except (KeyError, AttributeError):
+             return torch.zeros(env.num_envs, device=env.device)
+@@ -494,3 +499,143 @@ def success_reward(env: ManagerBasedRLEnv) -> torch.Tensor:
+     term_mask = env.termination_manager.get_term("grasp_completed")
+     bonus = term_mask.float() 
+     return bonus
++
++def align_ee_handle_relaxed(env: ManagerBasedRLEnv) -> torch.Tensor:
++    """
++    Reward for aligning both the end-effector Z and X axes with the handle's Z and X axes.
++    Combines the alignment in Z (tip direction) and X (gripper facing).
++    """
++    ee_quat = env.scene["ee_frame"].data.target_quat_w[..., 0, :]
++    handle_quat = env.scene["handle_frame"].data.target_quat_w[..., 0, :]
++
++    ee_rot_mat = matrix_from_quat(ee_quat)
++    handle_rot_mat = matrix_from_quat(handle_quat)
++
++    # Z alignment
++    ee_z = ee_rot_mat[..., 2]
++    handle_z = handle_rot_mat[..., 2]
++    align_z = torch.bmm(ee_z.unsqueeze(1), handle_z.unsqueeze(-1)).squeeze(-1).squeeze(-1)  # (N,)
++    reward_z = torch.sign(align_z) * align_z**2
++
++    # X alignment
++    ee_x = ee_rot_mat[..., 0]
++    handle_x = handle_rot_mat[..., 0]
++    align_x = torch.bmm(ee_x.unsqueeze(1), handle_x.unsqueeze(-1)).squeeze(-1).squeeze(-1)  # (N,)
++    reward_x = torch.sign(align_x) * align_x**2
++
++    reward_x = torch.where(align_x > 0.98, torch.ones_like(reward_x), reward_x)
++
++    reward_z = torch.where(align_z > 0.98, torch.ones_like(reward_z), reward_z)
++
++    # Total reward
++    return reward_z + reward_x
++
++
++def approach_zy_relaxed(env: ManagerBasedRLEnv) -> torch.Tensor: #allineamento xy e bonus solo se align ee handle buono
++    """
++    Reward for aligning the EE and handle origins in the XY plane (ignores Z axis).
++    """
++    try:
++
++        handle_pos = env.scene["handle_frame"].data.target_pos_w[..., 0, :]
++        ee_pos = env.scene["ee_frame"].data.target_pos_w[..., 0, :]
++
++        # Take only X and Y
++        handle_yz = handle_pos[..., [1, 2]]
++        ee_yz = ee_pos[...,  [1, 2]]
++
++        # Euclidean distance in XY plane
++        distance_yz = torch.norm(handle_yz - ee_yz, dim=-1, p=2)
++
++        # Reward shaping
++        reward = 1.0 / (1.0 + distance_yz*s)
++
++        mask = (ee_pos[..., 2] >= handle_pos[..., 2])
++        reward = (reward) * mask.float()
++
++        reward = torch.where(distance_yz <= 0.05, torch.ones_like(reward), reward)
++
++        return reward
++
++    except (KeyError, AttributeError):
++        return torch.zeros(env.num_envs, device=env.device)
++
++
++def approach_x_relaxed(env: ManagerBasedRLEnv) -> torch.Tensor: #allineamento z solo se xy buono
++    """
++    Reward for minimizing the vertical (Z-axis) distance between EE and handle,
++    but only if their XY positions are close (within xy_threshold).
++    """
++    try:
++        handle_pos = env.scene["handle_frame"].data.target_pos_w[..., 0, :]
++        ee_pos = env.scene["ee_frame"].data.target_pos_w[..., 0, :]
++
++        # Take only X and Y
++        handle_yz = handle_pos[..., [1, 2]]
++        ee_yz = ee_pos[...,  [1, 2]]
++
++        # Euclidean distance in XY plane
++        distance_yz = torch.norm(handle_yz - ee_yz, dim=-1, p=2)
++
++        # Step 2: Calcola la distanza lungo l'asse x (modulo)
++        x_distance = torch.abs((handle_pos[..., 0]) - ee_pos[..., 0])  # (N,)
++
++        # Step 3: Reward shaping sulla distanza Z (solo se XY è sotto soglia)
++        x_reward = 1.0 / (1.0 + x_distance*s)
++
++        x_reward = torch.where(x_distance <= 0.1, torch.ones_like(x_reward), x_reward)
++
++
++        adaptive_threshold = 0.8 * x_distance + 0.05 #cono di threshold
++        # Step 4: Applica solo se XY è vicino
++        return torch.where(distance_yz <= adaptive_threshold, x_reward, torch.zeros_like(x_reward))
++
++    except (KeyError, AttributeError):
++        return torch.zeros(env.num_envs, device=env.device)
++    
++
++def grasp_reward(env: ManagerBasedRLEnv) -> torch.Tensor:
++    
++    ee_pos=env.scene["ee_frame"].data.target_pos_w[..., 0, :]
++    handle_pos=env.scene["handle_frame"].data.target_pos_w[..., 0, :]
++    # check se gripper è chiuso e la distanza con handle è bassa
++    distance = torch.norm(ee_pos - handle_pos, dim=-1, p=2)
++    #grip_closed = env.actions.gripper_action.current_actions < -0.9
++
++
++    handle_yz = handle_pos[..., [1, 2]]
++    ee_yz = ee_pos[...,  [1, 2]]
++
++    # Euclidean distance in XY plane
++    distance_yz = torch.norm(handle_yz - ee_yz, dim=-1, p=2)
++    x_distance = torch.abs((handle_pos[..., 0]) - ee_pos[..., 0])  # (N,)
++    threshold= 0.2 * x_distance +0.02
++
++    ee_quat = env.scene["ee_frame"].data.target_quat_w[..., 0, :]
++    handle_quat = env.scene["handle_frame"].data.target_quat_w[..., 0, :]
++
++    ee_rot_mat = matrix_from_quat(ee_quat)
++    handle_rot_mat = matrix_from_quat(handle_quat)
++
++
++    ee_z = ee_rot_mat[..., 2]
++    handle_z = handle_rot_mat[..., 2]
++    align_z = torch.bmm(ee_z.unsqueeze(1), handle_z.unsqueeze(-1)).squeeze(-1).squeeze(-1)  # (N,)
++
++    # X alignment
++    ee_x = ee_rot_mat[..., 0]
++    handle_x = handle_rot_mat[..., 0]
++    align_x = torch.bmm(ee_x.unsqueeze(1), handle_x.unsqueeze(-1)).squeeze(-1).squeeze(-1)  # (N,)
++
++    threshold= 0.98 - 0.4 * x_distance
++
++    aligned = (align_z > threshold) & (align_x > threshold)
++
++    #return (distance < 0.03) & grip_closed
++    success= (distance < 0.1) & (distance_yz < threshold) & (aligned)
++
++    
++
++    reward = torch.where(success, torch.ones_like(success).float(), torch.zeros_like(success).float())
++
++    return reward
+\ No newline at end of file

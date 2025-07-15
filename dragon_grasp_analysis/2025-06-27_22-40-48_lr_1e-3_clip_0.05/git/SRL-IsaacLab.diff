@@ -1,0 +1,532 @@
+--- git status ---
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   parameter_analysis.csv
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/config/moonbot_cfgs_edo.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/cabinet_env_cfg.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/__init__.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg_tesi.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/joint_pos_env_cfg.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/Event.py
+	modified:   source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/rewards.py
+
+no changes added to commit (use "git add" and/or "git commit -a") 
+
+
+--- git diff ---
+diff --git a/parameter_analysis.csv b/parameter_analysis.csv
+index 53e80539..ac40e7b1 100644
+--- a/parameter_analysis.csv
++++ b/parameter_analysis.csv
+@@ -1,8 +1,22 @@
+ run_name,num_steps_per_env,value_loss_coef,clip_param,entropy_coef,num_mini_batches,learning_rate,gamma,lam,desired_kl
+-std_ppo,64,1,0.2,0.0005,64,0.001,0.998,0.95,0.008
+-2025-06-25_23-49-13_lr_1e-4_clip_0.2,128,1,0.2,0.002,64,0.0001,0.99,0.95,0.008
+-2025-06-26_00-11-39_lr_1e-5_clip_0.2,128,1,0.2,0.002,64,0.00001,0.99,0.95,0.008
+-2025-06-26_00-12-13_lr_1e-3_clip_0.2,128,1,0.2,0.002,64,0.001,0.99,0.95,0.008
+-2025-06-26_12-11-59_lr_1e-2_clip_0.2,128,1,0.2,0.002,64,0.01,0.99,0.95,0.008
+-2025-06-26_12-12-12_lr_1e-2_clip_0.3,128,1,0.3,0.002,64,0.01,0.99,0.95,0.008
+-2025-06-26_12-12-26_lr_1e-3_clip_0.3,128,1,0.3,0.002,64,0.001,0.99,0.95,0.008
++std_ppo,64,1.0,0.2,0.0005,64,0.001,0.998,0.95,0.008
++2025-06-25_23-49-13_lr_1e-4_clip_0.2,128,1.0,0.2,0.002,64,0.0001,0.99,0.95,0.008
++2025-06-26_00-11-39_lr_1e-5_clip_0.2,128,1.0,0.2,0.002,64,1e-05,0.99,0.95,0.008
++2025-06-26_00-12-13_lr_1e-3_clip_0.2,128,1.0,0.2,0.002,64,0.001,0.99,0.95,0.008
++2025-06-26_12-11-59_lr_1e-2_clip_0.2,128,1.0,0.2,0.002,64,0.01,0.99,0.95,0.008
++2025-06-26_12-12-12_lr_1e-2_clip_0.3,128,1.0,0.3,0.002,64,0.01,0.99,0.95,0.008
++2025-06-26_12-12-26_lr_1e-3_clip_0.3,128,1.0,0.3,0.002,64,0.001,0.99,0.95,0.008
++2025-06-26_18-31-03_lr_1e-4_clip_0.3,128,1.0,0.3,0.002,64,0.0001,0.99,0.95,0.008
++2025-06-26_18-31-18_lr_1e-5_clip_0.3,128,1.0,0.3,0.002,64,1e-05,0.99,0.95,0.008
++2025-06-27_01-44-44_lr_1e-5_clip_0.1,128,1.0,0.1,0.002,64,1e-05,0.99,0.95,0.008
++2025-06-27_01-44-58_lr_1e-4_clip_0.1,128,1.0,0.1,0.002,64,0.0001,0.99,0.95,0.008
++2025-06-27_01-45-12_lr_1e-3_clip_0.1,128,1.0,0.1,0.002,64,0.001,0.99,0.95,0.008
++2025-06-27_02-00-52_lr_1e-5_clip_0.1,128,1.0,0.1,0.002,64,1e-05,0.99,0.95,0.003
++2025-06-27_02-01-02_lr_1e-4_clip_0.1,128,1.0,0.1,0.002,64,0.0001,0.99,0.95,0.003
++2025-06-27_02-01-14_lr_1e-3_clip_0.1,128,1.0,0.1,0.002,64,0.001,0.99,0.95,0.003
++2025-06-27_10-55-03_lr_1e-2_clip_0.1,128,1.0,0.1,0.002,64,0.01,0.99,0.95,0.003
++2025-06-27_12-31-02_lr_1e-2_clip_0.1,128,1.0,0.1,0.002,64,0.01,0.99,0.95,0.003
++2025-06-27_15-37-38_lr_1e-5_clip_0.05,128,1.0,0.05,0.002,64,1e-05,0.99,0.95,0.003
++2025-06-27_15-54-33_lr_1e-4_clip_0.05,128,1.0,0.05,0.002,64,0.0001,0.99,0.95,0.003
++2025-06-27_22-40-48_lr_1e-3_clip_0.05,128,1.0,0.05,0.002,64,0.001,0.99,0.95,0.003
++2025-06-27_22-41-01_lr_1e-2_clip_0.05,128,1.0,0.05,0.002,64,0.01,0.99,0.95,0.003
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/config/moonbot_cfgs_edo.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/config/moonbot_cfgs_edo.py
+index 59297fd6..cca611e5 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/config/moonbot_cfgs_edo.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/descriptions/config/moonbot_cfgs_edo.py
+@@ -23,7 +23,7 @@ Joint velocity limits are in rad/s (revolute), m/s (prismatic)
+ Joint effort limits are in N*m (revolute), N (prismatic)
+ 
+ '''
+-scale= 10
++scale=10
+ scale2=100
+ 
+ DRAGON_ARTICULATED_CFG = ArticulationCfg(
+@@ -66,49 +66,49 @@ DRAGON_ARTICULATED_CFG = ArticulationCfg(
+     # "leg2joint1": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint1"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness = scale2*0.966,
+     #     damping = scale2*0.234,
+     # ),
+     # "leg2joint2": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint2"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness = scale2*0.966,
+     #     damping = scale2*0.234,
+     # ),
+     # "leg2joint3": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint3"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness = scale2*0.966,
+     #     damping =scale2* 0.234,
+     # ),
+     # "leg2joint4": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint4"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness = scale2*0.966,
+     #     damping = scale2*0.234,
+     # ),
+     # "leg2joint5": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint5"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness = scale2*0.966,
+     #     damping = scale2*0.234,
+     # ),
+     # "leg2joint6": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint6"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness = scale2*0.966,
+     #     damping = scale2*0.234,
+     # ),
+     # "leg2joint7": ImplicitActuatorCfg(
+     #     joint_names_expr=["leg2joint7"],
+     #     effort_limit_sim=scale2*136.11,
+-    #     velocity_limit_sim=0.15,
++    #     velocity_limit_sim=scale*0.15,
+     #     stiffness =scale2*0.966,
+     #     damping = scale2*0.234,
+     # ),
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/cabinet_env_cfg.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/cabinet_env_cfg.py
+index b9bd076b..33b1c0de 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/cabinet_env_cfg.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/cabinet_env_cfg.py
+@@ -389,29 +389,29 @@ class EventCfg:
+             "asset_cfg": SceneEntityCfg("robot"),
+         },
+     )
+-    reset_target_position = EventTerm(
+-        func=mdp_events.reset_root_state_uniform,
+-        mode="reset",
+-        params={
+-            "pose_range": {
+-                "x": (-0.5, 0.3),
+-                "y": (-0.5, 0.5),
+-                "z": (0.0, 0.0),
+-                "roll": (0.0, 0.0),
+-                "pitch": (0.0, 0.0),
+-                "yaw": (-0.1, 0.1),
+-            },
+-            "velocity_range": {
+-                "x": (0, 0),
+-                "y": (0, 0),
+-                "z": (0.0, 0.0),
+-                "roll": (0.0, 0.0),
+-                "pitch": (0.0, 0.0),
+-                "yaw": (0.0, 0.0),
+-            },
+-            "asset_cfg": SceneEntityCfg("wheel_with_handle"),
+-        },
+-    )
++    # reset_target_position = EventTerm(
++    #     func=mdp_events.reset_root_state_uniform,
++    #     mode="reset",
++    #     params={
++    #         "pose_range": {
++    #             "x": (-0.2, 0.3),
++    #             "y": (-0.3, 0.3),
++    #             "z": (0.0, 0.0),
++    #             "roll": (0.0, 0.0),
++    #             "pitch": (0.0, 0.0),
++    #             "yaw": (0.0, 0.0),
++    #         },
++    #         "velocity_range": {
++    #             "x": (0, 0),
++    #             "y": (0, 0),
++    #             "z": (0.0, 0.0),
++    #             "roll": (0.0, 0.0),
++    #             "pitch": (0.0, 0.0),
++    #             "yaw": (0.0, 0.0),
++    #         },
++    #         "asset_cfg": SceneEntityCfg("wheel_with_handle"),
++    #     },
++    # )
+ 
+ 
+ 
+@@ -481,23 +481,29 @@ class RewardsCfg:   #reward con curriculum
+ 
+     align_ee_handle = RewTerm(func=mdp.align_ee_handle_curriculum_wrapped, weight=1)
+     
+-    penalize_low_joints = RewTerm(func=mdp.penalize_low_joints_curriculum, weight=-1, params={"threshold4": 0.25, "threshold_ee": 0.25})
+-    
+-    reward_joint4_zyx = RewTerm(func=mdp.reward_joint4_zyx, weight=0.2)
+-    
+     approach_zy = RewTerm(func=mdp.approach_zy_curriculum_wrapped, weight=2.0)
+         
+     approach_x = RewTerm(func=mdp.approach_x_curriculum_wrapped, weight=2.0)
+ 
++    # align_ee_handle = RewTerm(func=mdp.align_ee_handle_relaxed, weight=1)
++
++    # approach_zy = RewTerm(func=mdp.approach_zy_relaxed, weight=2.0)
++
++    # approach_x = RewTerm(func=mdp.approach_x_relaxed, weight=2.0)
++
++    penalize_low_joints = RewTerm(func=mdp.penalize_low_joints_curriculum, weight=-1, params={"threshold4": 0.25, "threshold_ee": 0.25})
++    
++    reward_joint4_zyx = RewTerm(func=mdp.reward_joint4_zyx, weight=0.1)
++
+     penalty_touch = RewTerm(func=mdp.penalty_touch, weight=-1.0)
+ 
+     penalty_wheel = RewTerm(func=mdp.penalty_wheel, weight=-100.0)
+ 
+-    penalize_collision = RewTerm(func=mdp.penalize_collision, weight=-5.0)
++    penalize_collision = RewTerm(func=mdp.penalize_collision, weight=-10.0)
+ 
+     dof_torques_l2 = RewTerm(func=mdp.joint_torques_l2, weight=-1.0e-5)
+ 
+-    # termination_penalty = RewTerm(func=mdp.is_terminated, weight=-400)
++    termination_penalty = RewTerm(func=mdp.is_terminated, weight=-400)
+ 
+     #APPROACH GRASP
+ 
+@@ -529,7 +535,7 @@ class TerminationsCfg:
+ 
+     collision = DoneTerm(func=mdp_events.collision_termination)
+ 
+-    # target_termination = DoneTerm(func=mdp_events.handle_drift_termination)
++    target_termination = DoneTerm(func=mdp_events.handle_drift_termination)
+ 
+ @configclass
+ class RecorderCfg(ActionStateRecorderManagerCfg):
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/__init__.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/__init__.py
+index b33318a8..4f16af02 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/__init__.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/__init__.py
+@@ -15,52 +15,52 @@ from . import agents
+ # Joint Position Control - HeroDragon
+ ##
+ 
+-gym.register(
+-    id="Manipulation-HeroDragon-v0",
+-    entry_point="isaaclab_tasks.manager_based.moonshot.manipulation.cabinet.HeroDragonGraspEnv:HeroDragonGraspEnv",
+-    kwargs={
+-        "env_cfg_entry_point": f"{__name__}.joint_pos_env_cfg:HeroDragonGraspEnvCfg",
+-        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:HeroDragonGraspPPORunnerCfg",
+-        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
+-        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+-    },
+-    disable_env_checker=True,
+-)
+-
+-
+-
+-gym.register(
+-    id="Manipulation-HeroDragon-Play-v0",
+-    entry_point="isaaclab_tasks.manager_based.moonshot.manipulation.cabinet.HeroDragonGraspEnv:HeroDragonGraspEnv",
+-    kwargs={
+-        "env_cfg_entry_point": f"{__name__}.joint_pos_env_cfg:HeroDragonGraspEnvCfg_PLAY",
+-        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:HeroDragonGraspPPORunnerCfg",
+-        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
+-        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+-    },
+-    disable_env_checker=True,
+-)
+-
+-# gym.register(                #TESI
++# gym.register(
+ #     id="Manipulation-HeroDragon-v0",
+ #     entry_point="isaaclab_tasks.manager_based.moonshot.manipulation.cabinet.HeroDragonGraspEnv:HeroDragonGraspEnv",
+ #     kwargs={
+ #         "env_cfg_entry_point": f"{__name__}.joint_pos_env_cfg:HeroDragonGraspEnvCfg",
+-#         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg_tesi:HeroDragonGraspPPORunnerCfg2",
++#         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:HeroDragonGraspPPORunnerCfg",
+ #         "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
+ #         "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+ #     },
+ #     disable_env_checker=True,
+ # )
+ 
+-# gym.register(   #TESI
++
++
++# gym.register(
+ #     id="Manipulation-HeroDragon-Play-v0",
+ #     entry_point="isaaclab_tasks.manager_based.moonshot.manipulation.cabinet.HeroDragonGraspEnv:HeroDragonGraspEnv",
+ #     kwargs={
+ #         "env_cfg_entry_point": f"{__name__}.joint_pos_env_cfg:HeroDragonGraspEnvCfg_PLAY",
+-#         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg_tesi:HeroDragonGraspPPORunnerCfg2",
++#         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:HeroDragonGraspPPORunnerCfg",
+ #         "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
+ #         "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+ #     },
+ #     disable_env_checker=True,
+-# )
+\ No newline at end of file
++# )
++
++gym.register(                #TESI
++    id="Manipulation-HeroDragon-v0",
++    entry_point="isaaclab_tasks.manager_based.moonshot.manipulation.cabinet.HeroDragonGraspEnv:HeroDragonGraspEnv",
++    kwargs={
++        "env_cfg_entry_point": f"{__name__}.joint_pos_env_cfg:HeroDragonGraspEnvCfg",
++        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg_tesi:HeroDragonGraspPPORunnerCfg2",
++        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
++        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
++    },
++    disable_env_checker=True,
++)
++
++gym.register(   #TESI
++    id="Manipulation-HeroDragon-Play-v0",
++    entry_point="isaaclab_tasks.manager_based.moonshot.manipulation.cabinet.HeroDragonGraspEnv:HeroDragonGraspEnv",
++    kwargs={
++        "env_cfg_entry_point": f"{__name__}.joint_pos_env_cfg:HeroDragonGraspEnvCfg_PLAY",
++        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg_tesi:HeroDragonGraspPPORunnerCfg2",
++        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
++        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
++    },
++    disable_env_checker=True,
++)
+\ No newline at end of file
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg.py
+index aabdffc6..1bdf7bdd 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg.py
+@@ -10,7 +10,7 @@ from isaaclab_rl.rsl_rl import RslRlOnPolicyRunnerCfg, RslRlPpoActorCriticCfg, R
+ 
+ @configclass
+ class HeroDragonGraspPPORunnerCfg(RslRlOnPolicyRunnerCfg):
+-    num_steps_per_env = 64
++    num_steps_per_env = 128
+     max_iterations = 20000
+     save_interval = 1000
+     experiment_name = "hero_dragon_grasp"
+@@ -24,14 +24,14 @@ class HeroDragonGraspPPORunnerCfg(RslRlOnPolicyRunnerCfg):
+     algorithm = RslRlPpoAlgorithmCfg(
+         value_loss_coef=1.0,
+         use_clipped_value_loss=True,
+-        clip_param=0.2,
++        clip_param=0.1,
+         entropy_coef=2e-3,
+         num_learning_epochs=10,
+         num_mini_batches=64,
+-        learning_rate=1.0e-3,
++        learning_rate=1.0e-5,
+         schedule="adaptive",
+-        gamma=0.99,
++        gamma=0.999,
+         lam=0.95,
+-        desired_kl=0.008,
++        desired_kl=0.003,
+         max_grad_norm=0.5,
+     )
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg_tesi.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg_tesi.py
+index ef4d9066..7bb55455 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg_tesi.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/agents/rsl_rl_ppo_cfg_tesi.py
+@@ -16,7 +16,7 @@ from datetime import datetime
+ 
+ @configclass
+ class HeroDragonGraspPPORunnerCfg2(RslRlOnPolicyRunnerCfg):
+-    run_name = "lr_1e-3_clip_0.3"  # nome della run, usato per il CSV
++    run_name = "lr_1e-2_clip_0.05"  # nome della run, usato per il CSV
+     num_steps_per_env = 128
+     max_iterations = 1000
+     save_interval = 100
+@@ -31,15 +31,15 @@ class HeroDragonGraspPPORunnerCfg2(RslRlOnPolicyRunnerCfg):
+     algorithm = RslRlPpoAlgorithmCfg(
+         value_loss_coef=1.0,
+         use_clipped_value_loss=True,
+-        clip_param=0.3,
++        clip_param=0.05,
+         entropy_coef=2e-3,
+         num_learning_epochs=10,
+         num_mini_batches=64,
+-        learning_rate=1.0e-3,
++        learning_rate=1.0e-2,
+         schedule="adaptive",
+         gamma=0.99,
+         lam=0.95,
+-        desired_kl=0.008,
++        desired_kl=0.003,
+         max_grad_norm=0.5,
+     )
+ 
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/joint_pos_env_cfg.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/joint_pos_env_cfg.py
+index 37e1b72b..a49e69db 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/joint_pos_env_cfg.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/config/Hero_Dragon/joint_pos_env_cfg.py
+@@ -142,7 +142,7 @@ class HeroDragonGraspEnvCfg_PLAY(HeroDragonGraspEnvCfg):
+     def __post_init__(self):
+         super().__post_init__()
+ 
+-        self.scene.num_envs = 8
++        self.scene.num_envs = 32
+     
+         self.scene.env_spacing = 6
+ 
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/Event.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/Event.py
+index 3625cb31..f6abc5ae 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/Event.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/Event.py
+@@ -266,3 +266,31 @@ def handle_drift_termination(env: ManagerBasedRLEnv) -> torch.Tensor:
+ reset_root_state_uniform = base_events.reset_root_state_uniform
+ 
+ 
++# def freeze_robot_joints_on_success(env: ManagerBasedRLEnv):
++#     # is_grasp_successful restituisce BoolTensor (N_envs,)
++#     success_mask = is_grasp_successful(env)  # importala o definiscila nello stesso modulo
++
++#     # ciclo solo sugli env in cui success == True
++#     idxs = success_mask.nonzero(as_tuple=False).squeeze(-1).tolist()
++#     if not idxs:
++#         return
++
++#     robot_art = env.scene.entities["robot"].articulation
++#     num_dofs = robot_art.dof_count
++
++#     # prepariamo vettori di zeri e parametri “rigidi”
++#     zero_vel = [0.0] * num_dofs
++#     stiff   = [1e6]  * num_dofs
++#     damp    = [1e3]  * num_dofs
++
++#     for i in idxs:
++#         # annulla qualunque comando di velocity-target
++#         robot_art.set_dof_velocity_targets(i, zero_vel)
++#         # imposta drive stiffness/damping elevati per bloccare i giunti
++#         robot_art.set_drive_property(
++#             i,
++#             joint_indices=list(range(num_dofs)),
++#             stiffness=stiff,
++#             damping=damp
++#         )
++
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/rewards.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/rewards.py
+index 85239787..808709d3 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/rewards.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/moonshot/manipulation/cabinet/mdp/rewards.py
+@@ -494,3 +494,96 @@ def success_reward(env: ManagerBasedRLEnv) -> torch.Tensor:
+     term_mask = env.termination_manager.get_term("grasp_completed")
+     bonus = term_mask.float() 
+     return bonus
++
++def align_ee_handle_relaxed(env: ManagerBasedRLEnv) -> torch.Tensor:
++    """
++    Reward for aligning both the end-effector Z and X axes with the handle's Z and X axes.
++    Combines the alignment in Z (tip direction) and X (gripper facing).
++    """
++    ee_quat = env.scene["ee_frame"].data.target_quat_w[..., 0, :]
++    handle_quat = env.scene["handle_frame"].data.target_quat_w[..., 0, :]
++
++    ee_rot_mat = matrix_from_quat(ee_quat)
++    handle_rot_mat = matrix_from_quat(handle_quat)
++
++    # Z alignment
++    ee_z = ee_rot_mat[..., 2]
++    handle_z = handle_rot_mat[..., 2]
++    align_z = torch.bmm(ee_z.unsqueeze(1), handle_z.unsqueeze(-1)).squeeze(-1).squeeze(-1)  # (N,)
++    reward_z = torch.sign(align_z) * align_z**2
++
++    # X alignment
++    ee_x = ee_rot_mat[..., 0]
++    handle_x = handle_rot_mat[..., 0]
++    align_x = torch.bmm(ee_x.unsqueeze(1), handle_x.unsqueeze(-1)).squeeze(-1).squeeze(-1)  # (N,)
++    reward_x = torch.sign(align_x) * align_x**2
++
++    reward_x = torch.where(align_x > 0.98, torch.ones_like(reward_x), reward_x)
++
++    reward_z = torch.where(align_z > 0.98, torch.ones_like(reward_z), reward_z)
++
++    # Total reward
++    return reward_z + reward_x
++
++
++def approach_zy_relaxed(env: ManagerBasedRLEnv) -> torch.Tensor: #allineamento xy e bonus solo se align ee handle buono
++    """
++    Reward for aligning the EE and handle origins in the XY plane (ignores Z axis).
++    """
++    try:
++
++        handle_pos = env.scene["handle_frame"].data.target_pos_w[..., 0, :]
++        ee_pos = env.scene["ee_frame"].data.target_pos_w[..., 0, :]
++
++        # Take only X and Y
++        handle_yz = handle_pos[..., [1, 2]]
++        ee_yz = ee_pos[...,  [1, 2]]
++
++        # Euclidean distance in XY plane
++        distance_yz = torch.norm(handle_yz - ee_yz, dim=-1, p=2)
++
++        # Reward shaping
++        reward = 1.0 / (1.0 + distance_yz*s)
++
++        mask = (ee_pos[..., 2] >= handle_pos[..., 2])
++        reward = (reward) * mask.float()
++
++        reward = torch.where(distance_yz <= 0.05, torch.ones_like(reward), reward)
++
++        return reward
++
++    except (KeyError, AttributeError):
++        return torch.zeros(env.num_envs, device=env.device)
++
++
++def approach_x_relaxed(env: ManagerBasedRLEnv) -> torch.Tensor: #allineamento z solo se xy buono
++    """
++    Reward for minimizing the vertical (Z-axis) distance between EE and handle,
++    but only if their XY positions are close (within xy_threshold).
++    """
++    try:
++        handle_pos = env.scene["handle_frame"].data.target_pos_w[..., 0, :]
++        ee_pos = env.scene["ee_frame"].data.target_pos_w[..., 0, :]
++
++        # Take only X and Y
++        handle_yz = handle_pos[..., [1, 2]]
++        ee_yz = ee_pos[...,  [1, 2]]
++
++        # Euclidean distance in XY plane
++        distance_yz = torch.norm(handle_yz - ee_yz, dim=-1, p=2)
++
++        # Step 2: Calcola la distanza lungo l'asse x (modulo)
++        x_distance = torch.abs((handle_pos[..., 0]) - ee_pos[..., 0])  # (N,)
++
++        # Step 3: Reward shaping sulla distanza Z (solo se XY è sotto soglia)
++        x_reward = 1.0 / (1.0 + x_distance*s)
++
++        x_reward = torch.where(x_distance <= 0.1, torch.ones_like(x_reward), x_reward)
++
++
++        adaptive_threshold = 0.8 * x_distance + 0.05 #cono di threshold
++        # Step 4: Applica solo se XY è vicino
++        return torch.where(distance_yz <= adaptive_threshold, x_reward, torch.zeros_like(x_reward))
++
++    except (KeyError, AttributeError):
++        return torch.zeros(env.num_envs, device=env.device)
+\ No newline at end of file
